@@ -1,0 +1,85 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String   @unique
+  password     String
+  profileImage String?  @map("profile_image")
+  xp           Int      @default(0)
+  level        Int      @default(1)
+  createdAt    DateTime @default(now()) @map("created_at")
+  habits       Habit[]
+  goals        Goal[]
+
+  @@map("users")
+}
+
+
+model Habit {
+  id            Int        @id @default(autoincrement())
+  userId        Int        @map("user_id")
+  title         String
+  description   String?
+  category      String     // You can use enum but string is more flexible for custom categories
+  frequency     String     // e.g., "daily", "weekly"
+  targetValue   Float?     @map("target_value")
+  difficulty    String     // e.g., "easy", "medium", "hard"
+  createdAt     DateTime   @default(now()) @map("created_at")
+  
+  user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  logs          HabitLog[]
+  streak        Streak?
+
+  @@map("habits")
+}
+
+model HabitLog {
+  id        Int      @id @default(autoincrement())
+  habitId   Int      @map("habit_id")
+  date      DateTime
+  status    String   // "completed", "missed"
+  notes     String?
+  value     Float?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  habit     Habit    @relation(fields: [habitId], references: [id], onDelete: Cascade)
+
+  @@index([habitId, date])
+  @@map("habit_logs")
+}
+
+model Goal {
+  id           Int      @id @default(autoincrement())
+  userId       Int      @map("user_id")
+  title        String
+  targetValue  Float    @map("target_value")
+  currentValue Float    @default(0) @map("current_value")
+  deadline     DateTime?
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("goals")
+}
+
+model Streak {
+  id            Int      @id @default(autoincrement())
+  habitId       Int      @unique @map("habit_id")
+  currentStreak Int      @default(0) @map("current_streak")
+  longestStreak Int      @default(0) @map("longest_streak")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  habit         Habit    @relation(fields: [habitId], references: [id], onDelete: Cascade)
+
+  @@map("streaks")
+}

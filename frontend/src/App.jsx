@@ -36,8 +36,22 @@ const ProtectedRoute = ({ children }) => {
   if (loading) return <PageLoading />;
   if (!user) return <Navigate to="/login" replace />;
   
-  return children;
+  return (
+    <>
+      <ThunderBackground />
+      {children}
+    </>
+  );
 };
+
+const ThunderBackground = () => (
+  <div className="thunder-overlay">
+    <div className="thunder-flash" />
+    <div className="lightning-bolt bolt-1" />
+    <div className="lightning-bolt bolt-2" />
+    <div className="lightning-bolt bolt-3" />
+  </div>
+);
 
 const AppContent = () => {
     const { user } = useAuth();

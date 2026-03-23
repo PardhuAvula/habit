@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../services/api';
-import { Plus, Edit2, Trash2, X, Check, Save, Target, Layout, Clock, BarChart } from 'lucide-react';
+import { Plus, Edit2, Trash2, X, Check, Save, Target, Layout, Clock, BarChart, Zap, Activity, Calendar } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { motion, AnimatePresence } from 'framer-motion';
 

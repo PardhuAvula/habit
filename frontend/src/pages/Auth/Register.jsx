@@ -50,7 +50,7 @@ const Register = () => {
         playsInline 
         className="login-bg-video"
       >
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-futuristic-abstract-digital-landscape-2410-large.mp4" type="video/mp4" />
+        <source src="/videos/bg-intro.mp4" type="video/mp4" />
       </video>
       <div className="video-overlay" />
 

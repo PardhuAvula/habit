@@ -1,4 +1,9 @@
 {
+  "scripts": {
+    "start": "node server.js",
+    "build": "cd backend && npm install && npx prisma generate && cd ../frontend && npm install && npm run build",
+    "postinstall": "cd backend && npm install && npx prisma generate"
+  },
   "dependencies": {
     "@capacitor/android": "^8.2.0",
     "@capacitor/cli": "^8.2.0",

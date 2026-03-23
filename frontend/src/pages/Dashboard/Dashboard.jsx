@@ -219,87 +219,72 @@ const Dashboard = () => {
             <div className="dashboard-grid">
                 <motion.div 
                     whileHover={{ scale: 1.01 }}
-                    className="col-span-8 glass-card" 
+                    className="col-span-6 glass-card" 
                     style={{ 
                         position: 'relative',
                         display: 'flex', 
-                        gap: '2.5rem', 
+                        gap: '1.5rem', 
                         alignItems: 'center', 
                         background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(16, 185, 129, 0.1) 100%)',
                         border: '1px solid var(--primary-glow)',
-                        overflow: 'hidden'
+                        overflow: 'hidden',
+                        padding: '1.5rem'
                     }}
                 >
-                    <div style={{ padding: '2.5rem', borderRadius: '2rem', backgroundColor: 'rgba(255, 255, 255, 0.04)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary)' }}>
-                        <TrendingUp size={64} />
+                    <div style={{ padding: '1.25rem', borderRadius: '1.25rem', backgroundColor: 'rgba(255, 255, 255, 0.04)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary)' }}>
+                        <TrendingUp size={32} />
                     </div>
                     <div style={{ flex: 1, position: 'relative', zIndex: 1 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
-                             <h2 style={{ fontSize: '2rem', fontWeight: 900, margin: 0 }}>{stats.percentage}%</h2>
-                             <span style={{ fontSize: '0.875rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-muted)', letterSpacing: '0.05em' }}>Daily Momentum</span>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
+                             <h2 style={{ fontSize: '1.75rem', fontWeight: 900, margin: 0 }}>{stats.percentage}%</h2>
+                             <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-muted)', letterSpacing: '0.05em' }}>Momentum</span>
                         </div>
-                        <p style={{ marginBottom: '2rem', fontSize: '1.125rem', color: 'var(--text-secondary)', fontWeight: 500, maxWidth: '480px' }}>
-                            {stats.percentage >= 100 ? "Limitless! You've achieved perfection today." : 
-                             stats.percentage >= 50 ? "Solid effort! You're dominating the second half." :
-                             stats.total > 0 ? "Momentum is building. Take the next step." : 
-                             "Silence is the canvas. Paint your day with habits!"}
-                        </p>
-                        <div style={{ width: '100%', height: '14px', backgroundColor: 'var(--bg-dark)', borderRadius: '7px', overflow: 'hidden', border: '1px solid var(--border-focus)' }}>
+                        <div style={{ width: '100%', height: '8px', backgroundColor: 'var(--bg-dark)', borderRadius: '4px', overflow: 'hidden', border: '1px solid var(--border-focus)', marginBottom: '0.5rem' }}>
                             <motion.div 
                                 initial={{ width: 0 }}
                                 animate={{ width: `${stats.percentage}%` }}
                                 transition={{ duration: 1.5, ease: "easeOut" }}
-                                style={{ height: '100%', background: 'linear-gradient(90deg, var(--primary), var(--accent))', boxShadow: '0 0 15px var(--primary-glow)' }}
+                                style={{ height: '100%', background: 'linear-gradient(90deg, var(--primary), var(--accent))', boxShadow: '0 0 10px var(--primary-glow)' }}
                             />
                         </div>
-                    </div>
-                    <div style={{ position: 'absolute', right: '-20px', bottom: '-20px', opacity: 0.05, transform: 'rotate(-15deg)' }}>
-                        <Zap size={200} fill="currentColor" />
+                        <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: 600 }}>{stats.completed}/{stats.total} RITUALS SYNCED</p>
                     </div>
                 </motion.div>
 
                 <motion.div 
-                    whileHover={{ scale: 1.02, rotate: 1 }}
-                    className="col-span-4 glass-card" 
+                    whileHover={{ scale: 1.01 }}
+                    className="col-span-6 glass-card" 
                     style={{ 
+                        position: 'relative',
                         display: 'flex', 
-                        flexDirection: 'column', 
-                        justifyContent: 'space-between', 
-                        background: 'var(--bg-card)',
-                        border: '1px solid var(--border-focus)',
-                        boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
-                        textAlign: 'center'
+                        gap: '1.5rem', 
+                        alignItems: 'center', 
+                        background: 'linear-gradient(135deg, rgba(234, 88, 12, 0.2) 0%, rgba(245, 158, 11, 0.1) 100%)',
+                        border: '1px solid rgba(234, 88, 12, 0.3)',
+                        overflow: 'hidden',
+                        padding: '1.5rem'
                     }}
                 >
-                    <div>
-                        <div style={{ display: 'inline-flex', padding: '1rem', borderRadius: '1.25rem', background: 'var(--accent-glow)', color: 'var(--accent)', marginBottom: '1rem', boxShadow: '0 0 15px var(--accent-glow)' }}>
-                            <Award size={32} />
-                        </div>
-                        <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '0.25rem' }}>Level {user?.level || 1}</h3>
-                        <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>{user?.xp || 0} / {(user?.level || 1) * 100} XP to Next Rank</p>
+                    <div style={{ padding: '1.25rem', borderRadius: '1.25rem', backgroundColor: 'rgba(255, 255, 255, 0.04)', border: '1px solid rgba(234, 88, 12, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#f97316' }}>
+                        <Flame size={32} fill="#f97316" />
                     </div>
-
-                    <div style={{ width: '100%', padding: '1.5rem 0' }}>
-                        <div style={{ width: '100%', height: '8px', backgroundColor: 'var(--bg-dark)', borderRadius: '4px', overflow: 'hidden', border: '1px solid var(--border)' }}>
+                    <div style={{ flex: 1, position: 'relative', zIndex: 1 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
+                             <h2 style={{ fontSize: '1.75rem', fontWeight: 900, margin: 0 }}>{Math.max(0, ...habits.map(h => h.streak?.currentStreak || 0))}</h2>
+                             <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-muted)', letterSpacing: '0.05em' }}>Max Streak</span>
+                        </div>
+                        <div style={{ width: '100%', height: '8px', backgroundColor: 'var(--bg-dark)', borderRadius: '4px', overflow: 'hidden', border: '1px solid rgba(234, 88, 12, 0.2)', marginBottom: '0.5rem' }}>
                             <motion.div 
                                 initial={{ width: 0 }}
-                                animate={{ width: `${xpProgress}%` }}
-                                transition={{ duration: 1.2 }}
-                                style={{ height: '100%', background: 'linear-gradient(90deg, var(--accent), #10b981)' }}
+                                animate={{ width: `${Math.min(100, (Math.max(0, ...habits.map(h => h.streak?.currentStreak || 0)) / 30) * 100)}%` }}
+                                transition={{ duration: 1.5, ease: "easeOut" }}
+                                style={{ height: '100%', background: 'linear-gradient(90deg, #ea580c, #f59e0b)', boxShadow: '0 0 10px rgba(234, 88, 12, 0.4)' }}
                             />
                         </div>
+                        <p style={{ fontSize: '0.75rem', color: '#fbbf24', fontWeight: 600 }}>STREAK MASTERY ACTIVE</p>
                     </div>
-
-                    <div style={{ display: 'flex', justifyContent: 'space-around', borderTop: '1px solid var(--border)', paddingTop: '1.5rem' }}>
-                        <div>
-                            <div style={{ fontSize: '1.5rem', fontWeight: 800 }}>{stats.completed}</div>
-                            <div style={{ fontSize: '0.625rem', color: 'var(--text-muted)', fontWeight: 700 }}>DONE</div>
-                        </div>
-                        <div style={{ width: '1px', background: 'var(--border)' }}></div>
-                        <div>
-                            <div style={{ fontSize: '1.5rem', fontWeight: 800 }}>{stats.total - stats.completed}</div>
-                            <div style={{ fontSize: '0.625rem', color: 'var(--text-muted)', fontWeight: 700 }}>LEFT</div>
-                        </div>
+                    <div style={{ position: 'absolute', right: '-10px', bottom: '-10px', opacity: 0.1, transform: 'rotate(-10deg)' }}>
+                        <Flame size={100} fill="currentColor" />
                     </div>
                 </motion.div>
 
@@ -386,12 +371,18 @@ const Dashboard = () => {
                                                 <div style={{ padding: '0.8rem', borderRadius: '1.25rem', background: isDone ? 'var(--success-glow)' : 'var(--primary-glow)', color: isDone ? 'var(--success)' : 'var(--primary)', border: '1px solid currentColor', opacity: 0.8 }}>
                                                     <Activity size={24} />
                                                 </div>
-                                                <div style={{ textAlign: 'right' }}>
-                                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: isDone ? 'var(--warning)' : 'var(--text-muted)' }}>
-                                                        <Flame size={20} fill={isDone ? "var(--warning)" : "none"} strokeWidth={3} />
-                                                        <span style={{ fontSize: '1.5rem', fontWeight: 900 }}>{habit.streak?.currentStreak || 0}</span>
+                                                <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                                                    <div style={{ 
+                                                        display: 'flex', 
+                                                        alignItems: 'center', 
+                                                        gap: '0.4rem', 
+                                                        color: (habit.streak?.currentStreak || 0) > 0 ? '#f59e0b' : 'var(--text-muted)',
+                                                        filter: (habit.streak?.currentStreak || 0) > 0 ? 'drop-shadow(0 0 8px rgba(245, 158, 11, 0.4))' : 'none'
+                                                    }}>
+                                                        <Flame size={24} fill={(habit.streak?.currentStreak || 0) > 0 ? "#f59e0b" : "none"} strokeWidth={2.5} />
+                                                        <span style={{ fontSize: '2rem', fontWeight: 950, letterSpacing: '-0.05em', lineHeight: 1 }}>{habit.streak?.currentStreak || 0}</span>
                                                     </div>
-                                                    <div style={{ fontSize: '0.6rem', fontWeight: 800, color: 'var(--text-muted)', letterSpacing: '0.1em' }}>CURRENT STREAK</div>
+                                                    <div style={{ fontSize: '0.6rem', fontWeight: 800, color: 'var(--text-muted)', letterSpacing: '0.1em', marginTop: '0.2rem' }}>STREAK</div>
                                                 </div>
                                             </div>
 

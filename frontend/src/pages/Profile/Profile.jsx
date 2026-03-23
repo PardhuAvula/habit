@@ -5,6 +5,39 @@ import api from '../../services/api';
 import { User, Shield, Mail, Calendar, Settings, ChevronRight, Award, Zap, Camera, X, Save, Lock } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+const Modal = ({ title, children, onClose, message }) => (
+  <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(2, 6, 23, 0.9)', zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem', backdropFilter: 'blur(8px)' }}>
+    <motion.div 
+      initial={{ scale: 0.9, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      className="glass-card" 
+      style={{ width: '100%', maxWidth: '450px', padding: '2rem' }}
+    >
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+        <h2 style={{ margin: 0 }}>{title}</h2>
+        <button onClick={onClose} className="btn btn-ghost" style={{ padding: '0.5rem' }}><X size={24} /></button>
+      </div>
+      
+      {message && message.text && (
+        <div style={{ 
+          padding: '1rem', 
+          borderRadius: 'var(--radius-md)', 
+          marginBottom: '1.5rem', 
+          backgroundColor: message.type === 'success' ? 'var(--accent-glow)' : 'rgba(239, 68, 68, 0.1)',
+          color: message.type === 'success' ? 'var(--accent)' : 'var(--danger)',
+          fontSize: '0.875rem',
+          fontWeight: 600,
+          border: `1px solid ${message.type === 'success' ? 'var(--accent)' : 'var(--danger)'}`
+        }}>
+          {message.text}
+        </div>
+      )}
+      
+      {children}
+    </motion.div>
+  </div>
+);
+
 const Profile = () => {
   const { user, updateUser } = useAuth();
   const [uploading, setUploading] = useState(false);
@@ -93,39 +126,6 @@ const Profile = () => {
   const userLevel = user.level || 1;
   const userXP = user.xp || 0;
   const xpProgress = Math.min(100, Math.max(0, (userXP / (userLevel * 100)) * 100));
-
-  const Modal = ({ title, children, onClose }) => (
-    <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(2, 6, 23, 0.9)', zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem', backdropFilter: 'blur(8px)' }}>
-      <motion.div 
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        className="glass-card" 
-        style={{ width: '100%', maxWidth: '450px', padding: '2rem' }}
-      >
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-          <h2 style={{ margin: 0 }}>{title}</h2>
-          <button onClick={onClose} className="btn btn-ghost" style={{ padding: '0.5rem' }}><X size={24} /></button>
-        </div>
-        
-        {message.text && (
-          <div style={{ 
-            padding: '1rem', 
-            borderRadius: 'var(--radius-md)', 
-            marginBottom: '1.5rem', 
-            backgroundColor: message.type === 'success' ? 'var(--accent-glow)' : 'rgba(239, 68, 68, 0.1)',
-            color: message.type === 'success' ? 'var(--accent)' : 'var(--danger)',
-            fontSize: '0.875rem',
-            fontWeight: 600,
-            border: `1px solid ${message.type === 'success' ? 'var(--accent)' : 'var(--danger)'}`
-          }}>
-            {message.text}
-          </div>
-        )}
-        
-        {children}
-      </motion.div>
-    </div>
-  );
 
   return (
     <div className="fade-in">
@@ -335,7 +335,7 @@ const Profile = () => {
       
       <AnimatePresence>
         {activeModal === 'info' && (
-          <Modal title="Update Details" onClose={() => setActiveModal(null)}>
+          <Modal title="Update Details" onClose={() => setActiveModal(null)} message={message}>
             <form onSubmit={handleInfoSubmit}>
               <div className="input-group">
                 <label className="input-label">Display Name</label>
@@ -353,7 +353,7 @@ const Profile = () => {
         )}
 
         {activeModal === 'password' && (
-          <Modal title="Secure Access" onClose={() => setActiveModal(null)}>
+          <Modal title="Secure Access" onClose={() => setActiveModal(null)} message={message}>
             <form onSubmit={handlePassSubmit}>
               <div className="input-group">
                 <label className="input-label">Current Password</label>

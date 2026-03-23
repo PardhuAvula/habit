@@ -50,6 +50,7 @@ const ThunderBackground = () => (
     <div className="lightning-bolt bolt-1" />
     <div className="lightning-bolt bolt-2" />
     <div className="lightning-bolt bolt-3" />
+    <div className="lightning-bolt bolt-4" />
   </div>
 );
 

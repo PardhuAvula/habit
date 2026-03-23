@@ -505,7 +505,7 @@ p {
     gap: 1rem;
   }
 }
-/* Thunder/Lightning Animation */
+/* Thunder/Lightning Animation - High Frequency & Visibility */
 .thunder-overlay {
   position: fixed;
   top: 0;
@@ -513,7 +513,7 @@ p {
   width: 100vw;
   height: 100vh;
   pointer-events: none;
-  z-index: 1; /* Behind content but shows over background */
+  z-index: 100; /* Over background, under content but over some overlays */
   background-color: transparent;
   overflow: hidden;
 }
@@ -526,38 +526,44 @@ p {
   height: 100%;
   background: white;
   opacity: 0;
-  z-index: 9999; /* Flash over EVERYTHING briefly */
-  animation: thunder-strike 12s infinite;
+  z-index: 9999;
+  animation: thunder-strike 6s infinite ease-in-out;
 }
 
 @keyframes thunder-strike {
   0% { opacity: 0; }
-  1% { opacity: 0.1; }
-  2% { opacity: 0; }
-  3% { opacity: 0.15; }
-  4% { opacity: 0; }
+  2% { opacity: 0.2; }
+  3% { opacity: 0; }
+  5% { opacity: 0.3; }
+  7% { opacity: 0; }
+  30% { opacity: 0.15; }
+  31% { opacity: 0; }
   100% { opacity: 0; }
 }
 
 .lightning-bolt {
   position: absolute;
-  top: -100px;
-  width: 1px;
-  height: 50%;
-  background: rgba(129, 140, 248, 0.3);
-  box-shadow: 0 0 20px 2px rgba(129, 140, 248, 0.4);
-  transform: skewX(-20deg);
+  top: -20%;
+  width: 2px;
+  height: 100%;
+  background: white;
+  box-shadow: 0 0 30px 4px rgba(129, 140, 248, 0.8), 0 0 100px 10px rgba(99, 102, 241, 0.4);
+  transform: skewX(-25deg);
   opacity: 0;
+  z-index: 0;
 }
 
-.bolt-1 { left: 15%; animation: bolt-strike 15s infinite 2s; }
-.bolt-2 { left: 45%; animation: bolt-strike 15s infinite 7s; }
-.bolt-3 { left: 85%; animation: bolt-strike 15s infinite 12s; }
+.bolt-1 { left: 10%; animation: bolt-strike 4s infinite 0.5s; }
+.bolt-2 { left: 30%; animation: bolt-strike 6s infinite 2.5s; }
+.bolt-3 { left: 60%; animation: bolt-strike 4s infinite 1.5s; }
+.bolt-4 { left: 85%; animation: bolt-strike 5s infinite 3.5s; }
 
 @keyframes bolt-strike {
-  0% { opacity: 0; transform: translateY(-100%) skewX(-20deg); }
-  1% { opacity: 1; transform: translateY(0) skewX(-20deg); }
-  2% { opacity: 0; transform: translateY(100%) skewX(-20deg); }
+  0% { opacity: 0; transform: translateY(-100%) skewX(-25deg); }
+  5% { opacity: 1; transform: translateY(0) skewX(-25deg); }
+  7% { opacity: 0; }
+  8% { opacity: 0.8; }
+  10% { opacity: 0; transform: translateY(100%) skewX(-25deg); }
   100% { opacity: 0; }
 }
 

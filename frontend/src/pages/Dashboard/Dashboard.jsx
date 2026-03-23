@@ -174,15 +174,15 @@ const Dashboard = () => {
             animate={{ opacity: 1 }} 
             className="fade-in"
         >
-            <header style={{ marginBottom: '2.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+            <header className="dashboard-header" style={{ marginBottom: '2.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: '1.5rem', flexWrap: 'wrap' }}>
                 <div>
-                    <h1 style={{ marginBottom: '0.25rem', fontSize: '2.5rem', fontWeight: 800 }}>Overview</h1>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: 'var(--text-muted)' }}>
+                    <h1 style={{ marginBottom: '0.5rem', fontSize: '2.5rem', fontWeight: 800 }}>Overview</h1>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: 'var(--text-muted)', flexWrap: 'wrap' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                             <Calendar size={18} />
                             <span style={{ fontSize: '1rem', fontWeight: 600 }}>{format(currentTime, 'EEEE, MMMM do yyyy')}</span>
                         </div>
-                        <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'var(--border-focus)' }}></div>
+                        <div className="dot-divider" style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'var(--border-focus)' }}></div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--primary-light)' }}>
                             <Clock size={18} />
                             <span style={{ fontSize: '1rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>{format(currentTime, 'hh:mm:ss a')}</span>

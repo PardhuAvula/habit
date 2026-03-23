@@ -90,6 +90,12 @@ h1 { font-size: 2.5rem; letter-spacing: -0.04em; }
 h2 { font-size: 2rem; letter-spacing: -0.03em; }
 h3 { font-size: 1.5rem; letter-spacing: -0.02em; }
 
+@media (max-width: 768px) {
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.75rem; }
+  h3 { font-size: 1.25rem; }
+}
+
 p {
   color: var(--text-secondary);
 }
@@ -139,6 +145,15 @@ p {
   border-color: var(--border-focus);
   transform: translateY(-2px);
   box-shadow: 0 12px 25px -10px rgba(0, 0, 0, 0.5), var(--shadow-glow);
+}
+
+@media (max-width: 768px) {
+  .glass-card {
+    padding: 1.25rem;
+  }
+  .glass-card:hover {
+    transform: none;
+  }
 }
 
 .glass-card::before {
@@ -209,6 +224,13 @@ p {
   color: var(--text-muted);
 }
 
+@media (max-width: 768px) {
+  .input-field {
+    padding: 0.75rem 1rem;
+    font-size: 0.9375rem;
+  }
+}
+
 /* Buttons */
 .btn {
   display: inline-flex;
@@ -245,6 +267,13 @@ p {
 
 .btn-primary:active {
   transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .btn {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+  }
 }
 
 .btn-secondary {
@@ -425,5 +454,32 @@ p {
 .empty-state h3 {
   color: var(--text-secondary);
   margin-bottom: 0.5rem;
+}
+
+/* Responsive Spacing & Header Adjustments */
+@media (max-width: 768px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 1.5rem !important;
+  }
+  
+  .dot-divider {
+    display: none;
+  }
+  
+  .navbar {
+    height: 64px;
+  }
+  
+  h1 { font-size: 1.75rem !important; }
+}
+
+/* Modal Responsiveness */
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 1.5rem !important;
+    border-radius: var(--radius-lg) !important;
+  }
 }
 

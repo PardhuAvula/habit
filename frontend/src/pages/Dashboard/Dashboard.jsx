@@ -146,13 +146,22 @@ const Dashboard = () => {
 
     if (loading) {
         return (
-            <div className="fade-in">
-                <div style={{ height: '40px', width: '200px', marginBottom: '2rem' }} className="skeleton" />
-                <div className="dashboard-grid">
-                    <div className="col-span-8 skeleton" style={{ height: '220px', borderRadius: 'var(--radius-xl)' }} />
-                    <div className="col-span-4 skeleton" style={{ height: '220px', borderRadius: 'var(--radius-xl)' }} />
-                    <div className="col-span-12 skeleton" style={{ height: '400px', borderRadius: 'var(--radius-xl)' }} />
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '80vh', gap: '2rem' }}>
+                <div style={{ position: 'relative', width: '120px', height: '120px' }}>
+                    <div style={{ position: 'absolute', width: '100%', height: '100%', borderRadius: '50%', border: '4px solid var(--border)', borderTopColor: 'var(--primary)', animation: 'spin 1s linear infinite' }}></div>
+                    <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+                        <Activity size={40} className="pulse-icon" style={{ color: 'var(--primary-light)' }} />
+                    </div>
                 </div>
+                <div style={{ textAlign: 'center' }}>
+                    <h2 style={{ marginBottom: '0.5rem', letterSpacing: '-0.02em' }}>Syncing Neural Data...</h2>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>The server is waking up from cryo-sleep. Please wait ⏳</p>
+                </div>
+                <style>{`
+                    @keyframes spin { to { transform: rotate(360deg); } }
+                    .pulse-icon { animation: pulse 2s infinite ease-in-out; }
+                    @keyframes pulse { 0% { opacity: 1; transform: translate(-50%, -50%) scale(1); } 50% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.9); } 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+                `}</style>
             </div>
         );
     }

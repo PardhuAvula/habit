@@ -110,13 +110,13 @@ const Goals = () => {
 
     if (loading) {
         return (
-            <div className="fade-in">
-                <div style={{ height: '40px', width: '200px', marginBottom: '2rem' }} className="skeleton" />
-                <div className="dashboard-grid">
-                    {[1, 2, 3].map(i => (
-                        <div key={i} style={{ height: '240px' }} className="skeleton" />
-                    ))}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '60vh', gap: '2rem' }}>
+                <div style={{ width: '80px', height: '80px', borderRadius: '50%', border: '4px solid var(--border)', borderTopColor: 'var(--primary)', animation: 'spin 1s linear infinite' }}></div>
+                <div style={{ textAlign: 'center' }}>
+                    <h3 style={{ marginBottom: '0.5rem' }}>Aligning Objectives...</h3>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>Connecting to cloud database ⏳</p>
                 </div>
+                <style>{` @keyframes spin { to { transform: rotate(360deg); } } `}</style>
             </div>
         );
     }

@@ -161,7 +161,7 @@ const Navbar = () => {
               backgroundColor: 'var(--bg-card)', 
               borderBottom: '1px solid var(--border)', 
               overflow: 'hidden',
-              display: 'none' // Controlled by CSS
+              backdropFilter: 'blur(20px)'
             }}
             className="mobile-menu"
           >
@@ -203,7 +203,15 @@ const Navbar = () => {
         @media (max-width: 1024px) {
           .nav-user-name { display: none; }
           .mobile-menu-toggle { display: block !important; }
-          .mobile-menu { display: block !important; }
+          .mobile-menu { 
+            display: block !important; 
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+          }
         }
         
         @media (max-width: 480px) {

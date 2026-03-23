@@ -1,0 +1,9 @@
+{
+  "appId": "com.tracknrack.app",
+  "appName": "tracknrack",
+  "webDir": "frontend/dist",
+  "server": {
+    "url": "https://tracknrack.netlify.app",
+    "cleartext": true
+  }
+}

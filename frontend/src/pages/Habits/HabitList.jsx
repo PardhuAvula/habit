@@ -155,36 +155,29 @@ const HabitList = () => {
                         backdropFilter: 'blur(12px)',
                         overflowY: 'auto'
                     }}>
-                        <div className="glass-card fade-in" style={{ width: '100%', maxWidth: '420px', background: 'var(--bg-card)', border: '1px solid var(--border-focus)', padding: '2rem', margin: 'auto' }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-                                <h2 style={{ margin: 0, fontSize: '1.5rem' }}>{editingHabit ? 'Edit Behavior' : 'New Habit'}</h2>
-                                <button onClick={closeForm} className="btn btn-ghost" style={{ padding: '0.5rem' }}><X size={24} /></button>
+                        <div className="glass-card fade-in modal-content" style={{ width: '100%', maxWidth: '580px', background: 'var(--bg-card)', border: '1px solid var(--border-focus)', padding: '2.5rem', margin: 'auto' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem' }}>
+                                <div>
+                                    <h2 style={{ margin: 0, fontSize: '1.75rem', letterSpacing: '-0.02em', color: 'var(--text-main)' }}>{editingHabit ? 'Edit Behavioral Protocol' : 'Initialize New Habit'}</h2>
+                                    <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', margin: '0.25rem 0 0' }}>Define your next step towards excellence</p>
+                                </div>
+                                <button onClick={closeForm} className="btn btn-ghost" style={{ padding: '0.5rem', borderRadius: '50%' }}><X size={24} /></button>
                             </div>
                             
                             <form onSubmit={handleSubmit}>
-                                <div className="input-group">
-                                    <label className="input-label">What do you want to achieve?</label>
-                                    <input className="input-field" value={formData.title} onChange={(e) => setFormData({...formData, title: e.target.value})} placeholder="e.g. 5am Morning Run" required />
-                                </div>
-                                
-                                <div className="input-group">
-                                    <label className="input-label">Description (Optional)</label>
-                                    <textarea className="input-field" style={{ minHeight: '80px', resize: 'vertical' }} value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} placeholder="Why is this habit important to you?"></textarea>
-                                </div>
+                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
+                                    <div className="input-group" style={{ gridColumn: 'span 2' }}>
+                                        <label className="input-label" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><Activity size={14} /> Protocol Name</label>
+                                        <input className="input-field" value={formData.title} onChange={(e) => setFormData({...formData, title: e.target.value})} placeholder="e.g. 5am Bio-Optimization" required />
+                                    </div>
 
-                                <div className="input-group">
-                                    <label className="input-label"><Target size={14} style={{ marginRight: '0.4rem', verticalAlign: 'middle' }}/> Link to Objective</label>
-                                    <select className="input-field" value={formData.goalId} onChange={(e) => setFormData({...formData, goalId: e.target.value})}>
-                                        <option value="">-- No linked Objective --</option>
-                                        {(goals || []).map(g => (
-                                            <option key={g.id} value={g.id}>{g.title}</option>
-                                        ))}
-                                    </select>
-                                </div>
-                                
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+                                    <div className="input-group" style={{ gridColumn: 'span 2' }}>
+                                        <label className="input-label" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>Protocol Details (Optional)</label>
+                                        <textarea className="input-field" style={{ minHeight: '80px', resize: 'none' }} value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} placeholder="Define the core purpose..."></textarea>
+                                    </div>
+
                                     <div className="input-group">
-                                        <label className="input-label"><Layout size={14} style={{ marginRight: '0.4rem' }}/> Category</label>
+                                        <label className="input-label" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><Layout size={14} /> Category</label>
                                         <select className="input-field" value={formData.category} onChange={(e) => setFormData({...formData, category: e.target.value})}>
                                             <option>Productivity</option>
                                             <option>Health</option>
@@ -194,43 +187,60 @@ const HabitList = () => {
                                             <option>Personal Development</option>
                                         </select>
                                     </div>
+
                                     <div className="input-group">
-                                        <label className="input-label"><Clock size={14} style={{ marginRight: '0.4rem' }}/> Frequency</label>
-                                        <select className="input-field" value={formData.frequency} onChange={(e) => setFormData({...formData, frequency: e.target.value})}>
-                                            <option value="daily">Daily</option>
-                                            <option value="weekly">Weekly</option>
-                                            <option value="custom">Custom</option>
+                                        <label className="input-label" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><Target size={14} /> Link to Objective</label>
+                                        <select className="input-field" value={formData.goalId} onChange={(e) => setFormData({...formData, goalId: e.target.value})}>
+                                            <option value="">-- No linked Objective --</option>
+                                            {(goals || []).map(g => (
+                                                <option key={g.id} value={g.id}>{g.title}</option>
+                                            ))}
                                         </select>
                                     </div>
+
                                     <div className="input-group">
-                                        <label className="input-label"><Target size={14} style={{ marginRight: '0.4rem' }}/> Effort</label>
+                                        <label className="input-label" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><Clock size={14} /> Frequency</label>
+                                        <select className="input-field" value={formData.frequency} onChange={(e) => setFormData({...formData, frequency: e.target.value})}>
+                                            <option value="daily">Daily</option>
+                                            <option value="weekly">Weekly (Weekdays)</option>
+                                            <option value="custom">Custom Date</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="input-group">
+                                        <label className="input-label" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><Zap size={14} /> Effort Tier</label>
                                         <select className="input-field" value={formData.difficulty} onChange={(e) => setFormData({...formData, difficulty: e.target.value})}>
                                             <option value="easy">Easy (10 XP)</option>
                                             <option value="medium">Medium (25 XP)</option>
                                             <option value="hard">Hard (50 XP)</option>
                                         </select>
                                     </div>
+
+                                    {formData.frequency === 'custom' && (
+                                        <motion.div 
+                                            initial={{ opacity: 0, height: 0 }}
+                                            animate={{ opacity: 1, height: 'auto' }}
+                                            className="input-group" 
+                                            style={{ gridColumn: 'span 2', marginTop: '0.5rem' }}
+                                        >
+                                            <label className="input-label" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><Calendar size={14} /> Activation Date</label>
+                                            <input 
+                                                type="date" 
+                                                className="input-field" 
+                                                value={formData.customDate} 
+                                                onChange={(e) => setFormData({...formData, customDate: e.target.value})} 
+                                                required 
+                                            />
+                                        </motion.div>
+                                    )}
                                 </div>
                                 
-                                {formData.frequency === 'custom' && (
-                                    <div className="input-group fade-in" style={{ marginTop: '1.5rem' }}>
-                                        <label className="input-label"><Calendar size={14} style={{ marginRight: '0.4rem' }}/> Target Date</label>
-                                        <input 
-                                            type="date" 
-                                            className="input-field" 
-                                            value={formData.customDate} 
-                                            onChange={(e) => setFormData({...formData, customDate: e.target.value})} 
-                                            required 
-                                        />
-                                    </div>
-                                )}
-                                
 
-                                <button type="submit" disabled={submitting} className="btn btn-primary" style={{ width: '100%', padding: '1rem', marginTop: '1.5rem' }}>
+                                <button type="submit" disabled={submitting} className="btn btn-primary" style={{ width: '100%', padding: '1rem', marginTop: '1rem', fontSize: '1rem', borderRadius: 'var(--radius-xl)' }}>
                                     {submitting ? (
-                                        <>Initializing...</>
+                                        <>Synchronizing Neural State...</>
                                     ) : (
-                                        <><Save size={18} /> {editingHabit ? 'Save Changes' : 'Initialize Behavior'}</>
+                                        <><Save size={18} /> {editingHabit ? 'Commit Protocol' : 'Initialize Protocol'}</>
                                     )}
                                 </button>
                             </form>

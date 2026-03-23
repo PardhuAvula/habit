@@ -14,6 +14,7 @@ const Goals = () => {
         targetValue: '',
         deadline: ''
     });
+    const [submitting, setSubmitting] = useState(false);
 
     useEffect(() => {
         fetchGoals();
@@ -32,6 +33,7 @@ const Goals = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setSubmitting(true);
         try {
             await api.post('/goals', formData);
             
@@ -43,11 +45,14 @@ const Goals = () => {
                 colors: ['#6366f1', '#a855f7']
             });
 
-            fetchGoals();
+            await fetchGoals();
             setShowForm(false);
             setFormData({ title: '', targetValue: '', deadline: '' });
         } catch (err) {
             console.error('Error creating goal:', err);
+            alert('Failed to initialize objective. Please check your inputs and try again.');
+        } finally {
+            setSubmitting(false);
         }
     };
 
@@ -134,13 +139,24 @@ const Goals = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(2, 6, 23, 0.85)', zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem', backdropFilter: 'blur(8px)' }}
+                        style={{ 
+                            position: 'fixed', 
+                            top: 0, left: 0, right: 0, bottom: 0, 
+                            background: 'rgba(2, 6, 23, 0.85)', 
+                            zIndex: 5000, 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            justifyContent: 'center', 
+                            padding: '2rem 1rem', 
+                            backdropFilter: 'blur(12px)',
+                            overflowY: 'auto'
+                        }}
                     >
                         <motion.div 
                             initial={{ scale: 0.9, y: 20 }}
                             animate={{ scale: 1, y: 0 }}
                             className="glass-card" 
-                            style={{ width: '100%', maxWidth: '500px', padding: '2rem' }}
+                            style={{ width: '100%', maxWidth: '500px', padding: '2.5rem', margin: 'auto' }}
                         >
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                                 <h2 style={{ margin: 0 }}>New Objective</h2>
@@ -161,8 +177,8 @@ const Goals = () => {
                                         <input type="date" className="input-field" value={formData.deadline} onChange={(e) => setFormData({...formData, deadline: e.target.value})} />
                                     </div>
                                 </div>
-                                <button type="submit" className="btn btn-primary" style={{ width: '100%', padding: '1rem', marginTop: '1.5rem' }}>
-                                    <Save size={18} /> Initialize Goal
+                                <button type="submit" disabled={submitting} className="btn btn-primary" style={{ width: '100%', padding: '1rem', marginTop: '1.5rem' }}>
+                                    <Save size={18} /> {submitting ? 'Initializing...' : 'Initialize Objective'}
                                 </button>
                             </form>
                         </motion.div>

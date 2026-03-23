@@ -72,7 +72,8 @@ exports.getUserStats = asyncHandler(async (req, res) => {
 // @route   PUT /api/users/profile
 // @access  Private
 exports.updateProfile = asyncHandler(async (req, res) => {
-  const { name, email } = req.body;
+  const { name } = req.body;
+  const email = req.body.email ? req.body.email.toLowerCase() : undefined;
 
   // Check if email already taken
   if (email && email !== req.user.email) {

@@ -7,28 +7,35 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const HabitList = () => {
     const [habits, setHabits] = useState([]);
+    const [goals, setGoals] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showForm, setShowForm] = useState(false);
     const [editingHabit, setEditingHabit] = useState(null);
+    const [submitting, setSubmitting] = useState(false);
     const [formData, setFormData] = useState({
         title: '',
         description: '',
         category: 'Productivity',
         frequency: 'daily',
         targetValue: '',
-        difficulty: 'medium'
+        difficulty: 'medium',
+        goalId: ''
     });
 
     useEffect(() => {
-        fetchHabits();
+        fetchData();
     }, []);
 
-    const fetchHabits = async () => {
+    const fetchData = async () => {
         try {
-            const res = await api.get('/habits');
-            setHabits(res.data);
+            const [habitsRes, goalsRes] = await Promise.all([
+                api.get('/habits'),
+                api.get('/goals')
+            ]);
+            setHabits(habitsRes.data);
+            setGoals(goalsRes.data);
         } catch (err) {
-            console.error('Failed to fetch habits:', err);
+            console.error('Failed to fetch data:', err);
         } finally {
             setLoading(false);
         }
@@ -36,6 +43,7 @@ const HabitList = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setSubmitting(true);
         try {
             if (editingHabit) {
                 await api.put(`/habits/${editingHabit.id}`, formData);
@@ -49,11 +57,14 @@ const HabitList = () => {
                     colors: ['#6366f1', '#10b981', '#f59e0b']
                 });
             }
-            fetchHabits();
+            await fetchData();
             closeForm();
 
         } catch (err) {
             console.error('Error saving habit:', err);
+            alert('Failed to save habit. Please check your inputs and try again.');
+        } finally {
+            setSubmitting(false);
         }
     };
 
@@ -77,7 +88,8 @@ const HabitList = () => {
                 category: habit.category,
                 frequency: habit.frequency,
                 targetValue: habit.targetValue || '',
-                difficulty: habit.difficulty
+                difficulty: habit.difficulty,
+                goalId: habit.goalId || ''
             });
         } else {
             setEditingHabit(null);
@@ -87,7 +99,8 @@ const HabitList = () => {
                 category: 'Productivity',
                 frequency: 'daily',
                 targetValue: '',
-                difficulty: 'medium'
+                difficulty: 'medium',
+                goalId: ''
             });
         }
         setShowForm(true);
@@ -129,8 +142,19 @@ const HabitList = () => {
                 </header>
 
                 {showForm && (
-                    <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(2, 6, 23, 0.85)', zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem', backdropFilter: 'blur(8px)' }}>
-                        <div className="glass-card fade-in" style={{ width: '100%', maxWidth: '420px', background: 'var(--bg-card)', border: '1px solid var(--border-focus)', padding: '1.5rem' }}>
+                    <div style={{ 
+                        position: 'fixed', 
+                        top: 0, left: 0, right: 0, bottom: 0, 
+                        background: 'rgba(2, 6, 23, 0.85)', 
+                        zIndex: 5000, 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'center', 
+                        padding: '2rem 1rem', 
+                        backdropFilter: 'blur(12px)',
+                        overflowY: 'auto'
+                    }}>
+                        <div className="glass-card fade-in" style={{ width: '100%', maxWidth: '420px', background: 'var(--bg-card)', border: '1px solid var(--border-focus)', padding: '2rem', margin: 'auto' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                                 <h2 style={{ margin: 0, fontSize: '1.5rem' }}>{editingHabit ? 'Edit Behavior' : 'New Habit'}</h2>
                                 <button onClick={closeForm} className="btn btn-ghost" style={{ padding: '0.5rem' }}><X size={24} /></button>
@@ -145,6 +169,16 @@ const HabitList = () => {
                                 <div className="input-group">
                                     <label className="input-label">Description (Optional)</label>
                                     <textarea className="input-field" style={{ minHeight: '80px', resize: 'vertical' }} value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} placeholder="Why is this habit important to you?"></textarea>
+                                </div>
+
+                                <div className="input-group">
+                                    <label className="input-label"><Target size={14} style={{ marginRight: '0.4rem', verticalAlign: 'middle' }}/> Link to Objective</label>
+                                    <select className="input-field" value={formData.goalId} onChange={(e) => setFormData({...formData, goalId: e.target.value})}>
+                                        <option value="">-- No linked Objective --</option>
+                                        {(goals || []).map(g => (
+                                            <option key={g.id} value={g.id}>{g.title}</option>
+                                        ))}
+                                    </select>
                                 </div>
                                 
                                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
@@ -167,11 +201,23 @@ const HabitList = () => {
                                             <option value="custom">Custom</option>
                                         </select>
                                     </div>
+                                    <div className="input-group">
+                                        <label className="input-label"><Target size={14} style={{ marginRight: '0.4rem' }}/> Effort</label>
+                                        <select className="input-field" value={formData.difficulty} onChange={(e) => setFormData({...formData, difficulty: e.target.value})}>
+                                            <option value="easy">Easy (10 XP)</option>
+                                            <option value="medium">Medium (25 XP)</option>
+                                            <option value="hard">Hard (50 XP)</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 
 
-                                <button type="submit" className="btn btn-primary" style={{ width: '100%', padding: '1rem', marginTop: '1.5rem' }}>
-                                    <Save size={18} /> {editingHabit ? 'Save Changes' : 'Create Habit'}
+                                <button type="submit" disabled={submitting} className="btn btn-primary" style={{ width: '100%', padding: '1rem', marginTop: '1.5rem' }}>
+                                    {submitting ? (
+                                        <>Initializing...</>
+                                    ) : (
+                                        <><Save size={18} /> {editingHabit ? 'Save Changes' : 'Initialize Behavior'}</>
+                                    )}
                                 </button>
                             </form>
                         </div>
@@ -214,6 +260,13 @@ const HabitList = () => {
                                     </div>
                                     <h3 style={{ marginBottom: '0.75rem' }}>{habit.title}</h3>
                                     <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', marginBottom: '1.5rem', lineHeight: 1.6 }}>{habit.description || "No description provided."}</p>
+                                    
+                                    {habit.goalId && (
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.5rem 0.75rem', background: 'var(--accent-glow)', borderRadius: '0.75rem', marginBottom: '1.5rem', border: '1px solid var(--accent)' }}>
+                                            <Target size={14} color="var(--accent)" />
+                                            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--accent)' }}>Linked to: {goals.find(g => g.id === habit.goalId)?.title || 'Objective'}</span>
+                                        </div>
+                                    )}
                                 </div>
                                 
                                 <div style={{ paddingTop: '1.25rem', borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

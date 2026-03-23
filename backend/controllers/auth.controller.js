@@ -22,7 +22,8 @@ const userSelect = {
 // @route   POST /api/auth/register
 // @access  Public
 exports.register = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, password } = req.body;
+  const email = req.body.email.toLowerCase();
 
   const userExists = await prisma.user.findUnique({ where: { email } });
   if (userExists) {
@@ -55,7 +56,8 @@ exports.register = asyncHandler(async (req, res) => {
 // @route   POST /api/auth/login
 // @access  Public
 exports.login = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
+  const { password } = req.body;
+  const email = req.body.email.toLowerCase();
 
   const user = await prisma.user.findUnique({ 
     where: { email },

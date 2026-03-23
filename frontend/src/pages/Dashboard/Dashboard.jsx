@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../services/api';
-import { Flame, CheckCircle, Circle, ArrowRight, TrendingUp, CheckSquare, Plus, Minus, Calendar, Zap, Award, Target, Activity } from 'lucide-react';
+import { Flame, CheckCircle, Circle, ArrowRight, TrendingUp, CheckSquare, Plus, Minus, Calendar, Zap, Award, Target, Activity, Clock } from 'lucide-react';
 
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
@@ -16,6 +16,15 @@ const Dashboard = () => {
     const [filter, setFilter] = useState('all');
 
     const [isUpdating, setIsUpdating] = useState(false);
+    const [currentTime, setCurrentTime] = useState(new Date());
+
+    useEffect(() => {
+        const timeInterval = setInterval(() => {
+            setCurrentTime(new Date());
+        }, 1000);
+
+        return () => clearInterval(timeInterval);
+    }, []);
 
     useEffect(() => {
         fetchDashboardData();
@@ -60,47 +69,37 @@ const Dashboard = () => {
         }
     };
 
-    const updateHabitCount = async (habitId, action) => {
+    const toggleHabitStatus = async (habitId, currentIsDone) => {
         if (isUpdating) return;
         setIsUpdating(true);
 
         try {
-            // Find current habit locally
-            const targetHabit = habits.find(h => h.id === habitId);
-            const currentCount = targetHabit?.logs?.[0]?.value ?? (targetHabit?.completedToday ? 1 : 0);
+            const newStatus = currentIsDone ? 'missed' : 'completed';
             
-            let newCount = currentCount;
-            if (action === 'increment') newCount++;
-            else if (action === 'decrement') newCount = Math.max(0, newCount - 1);
-            
-            const newlyCompleted = currentCount === 0 && newCount > 0;
-            const newlyMissed = currentCount > 0 && newCount === 0;
-
             // Optimistic Update
             setHabits(prev => prev.map(h => 
                 h.id === habitId ? { 
                     ...h, 
-                    completedToday: newCount > 0,
-                    logs: [{ ...h.logs?.[0], value: newCount, status: newCount > 0 ? 'completed' : 'missed' }],
+                    completedToday: !currentIsDone,
+                    logs: [{ ...h.logs?.[0], value: currentIsDone ? 0 : 1, status: newStatus }],
                     streak: { 
                         ...h.streak, 
-                        currentStreak: newlyCompleted ? (h.streak?.currentStreak || 0) + 1 : 
-                                       newlyMissed ? Math.max(0, (h.streak?.currentStreak || 0) - 1) : 
-                                       (h.streak?.currentStreak || 0)
+                        currentStreak: !currentIsDone ? (h.streak?.currentStreak || 0) + 1 : 
+                                       Math.max(0, (h.streak?.currentStreak || 0) - 1)
                     } 
                 } : h
             ));
 
-            if (newlyCompleted || action === 'increment') {
+            if (!currentIsDone) {
                 confetti({
-                    particleCount: newlyCompleted ? 150 : 40,
-                    spread: newlyCompleted ? 70 : 40,
+                    particleCount: 150,
+                    spread: 70,
                     origin: { y: 0.6 },
                     colors: ['#6366f1', '#10b981', '#f59e0b']
                 });
             }
 
-            const response = await api.post(`/habits/${habitId}/log`, { action });
+            const response = await api.post(`/habits/${habitId}/log`, { status: newStatus });
 
             // Update with full server state
             const updatedHabit = response.data;
@@ -135,7 +134,7 @@ const Dashboard = () => {
 
             await refreshUser(); 
         } catch (err) {
-            console.error('Failed to update habit count:', err);
+            console.error('Failed to update habit status:', err);
             await fetchDashboardData();
         } finally {
             setIsUpdating(false);
@@ -169,9 +168,16 @@ const Dashboard = () => {
             <header style={{ marginBottom: '2.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
                 <div>
                     <h1 style={{ marginBottom: '0.25rem', fontSize: '2.5rem', fontWeight: 800 }}>Overview</h1>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-muted)' }}>
-                        <Calendar size={18} />
-                        <span style={{ fontSize: '1rem', fontWeight: 600 }}>{format(new Date(), 'EEEE, MMMM do')}</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: 'var(--text-muted)' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <Calendar size={18} />
+                            <span style={{ fontSize: '1rem', fontWeight: 600 }}>{format(currentTime, 'EEEE, MMMM do yyyy')}</span>
+                        </div>
+                        <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'var(--border-focus)' }}></div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--primary-light)' }}>
+                            <Clock size={18} />
+                            <span style={{ fontSize: '1rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>{format(currentTime, 'hh:mm:ss a')}</span>
+                        </div>
                     </div>
                 </div>
                 <div style={{ display: 'flex', gap: '1rem' }}>
@@ -371,54 +377,34 @@ const Dashboard = () => {
                                                 </div>
                                             </div>
 
-                                            <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
-                                                <button 
-                                                    disabled={isUpdating || (habit.logs?.[0]?.value || 0) === 0}
-                                                    onClick={() => updateHabitCount(habit.id, 'decrement')}
-                                                    style={{ 
-                                                        flex: 1,
-                                                        padding: '1rem',
-                                                        borderRadius: '1rem',
-                                                        border: isDone ? '1px solid var(--border)' : '1px solid var(--border-focus)',
-                                                        background: 'transparent',
-                                                        color: (habit.logs?.[0]?.value || 0) > 0 ? 'var(--text-main)' : 'var(--text-muted)',
-                                                        cursor: isUpdating || (habit.logs?.[0]?.value || 0) === 0 ? 'not-allowed' : 'pointer',
-                                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                                        transition: 'all 0.3s'
-                                                    }}
-                                                >
-                                                    <Minus size={20} />
-                                                </button>
-                                                
-                                                <div style={{
-                                                    flex: 2,
-                                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                                    background: isDone ? 'var(--success-glow)' : 'var(--bg-dark)',
-                                                    border: isDone ? '1px solid var(--success)' : '1px solid var(--border)',
-                                                    borderRadius: '1rem',
-                                                    color: isDone ? 'var(--success)' : 'var(--text-main)',
-                                                    fontWeight: 900,
-                                                    fontSize: '1.25rem'
-                                                }}>
-                                                    {habit.logs?.[0]?.value || 0}
-                                                </div>
-
+                                            <div style={{ display: 'flex', marginTop: '0.5rem' }}>
                                                 <button 
                                                     disabled={isUpdating}
-                                                    onClick={() => updateHabitCount(habit.id, 'increment')}
+                                                    onClick={() => toggleHabitStatus(habit.id, isDone)}
                                                     style={{ 
-                                                        flex: 1,
+                                                        width: '100%',
                                                         padding: '1rem',
                                                         borderRadius: '1rem',
-                                                        border: 'none',
-                                                        background: isDone ? 'var(--success)' : 'var(--primary)',
-                                                        color: '#fff',
+                                                        border: isDone ? '1px solid var(--success)' : '1px solid var(--primary)',
+                                                        background: isDone ? 'var(--success-glow)' : 'var(--primary)',
+                                                        color: isDone ? 'var(--success)' : '#fff',
                                                         cursor: isUpdating ? 'not-allowed' : 'pointer',
-                                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                                        transition: 'all 0.3s'
+                                                        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
+                                                        transition: 'all 0.3s',
+                                                        fontWeight: 800
                                                     }}
                                                 >
-                                                    <Plus size={20} />
+                                                    {isDone ? (
+                                                        <>
+                                                            <CheckCircle size={20} />
+                                                            Completed Today
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <Circle size={20} />
+                                                            Mark Complete
+                                                        </>
+                                                    )}
                                                 </button>
                                             </div>
                                         </motion.div>

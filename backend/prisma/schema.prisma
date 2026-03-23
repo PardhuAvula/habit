@@ -39,6 +39,8 @@ model Habit {
   user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   logs          HabitLog[]
   streak        Streak?
+  goalId        Int?       @map("goal_id")
+  goal          Goal?      @relation(fields: [goalId], references: [id], onDelete: SetNull)
 
   @@map("habits")
 }
@@ -68,6 +70,7 @@ model Goal {
   createdAt    DateTime @default(now()) @map("created_at")
 
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  habits       Habit[]
 
   @@map("goals")
 }

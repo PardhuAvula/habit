@@ -52,10 +52,27 @@ const Dashboard = () => {
     const fetchDashboardData = async () => {
         try {
             const res = await api.get('/habits');
-            setHabits(res.data);
+            const allHabits = res.data;
             
-            const completedCount = res.data.filter(h => h.completedToday).length;
-            const totalCount = res.data.length;
+            // Filter habits based on frequency scheduling
+            const today = new Date();
+            const dayOfWeek = today.getDay(); // 0 (Sun) to 6 (Sat)
+            const todayStr = format(today, 'yyyy-MM-dd');
+            const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+
+            const filteredHabits = allHabits.filter(h => {
+                if (h.frequency === 'daily') return true;
+                if (h.frequency === 'weekly') return !isWeekend; // Show mon-fri
+                if (h.frequency === 'custom' && h.customDate) {
+                    return format(new Date(h.customDate), 'yyyy-MM-dd') === todayStr;
+                }
+                return true; // Fallback
+            });
+
+            setHabits(filteredHabits);
+            
+            const completedCount = filteredHabits.filter(h => h.completedToday).length;
+            const totalCount = filteredHabits.length;
             
             setStats({
                 total: totalCount,

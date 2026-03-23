@@ -19,7 +19,8 @@ const HabitList = () => {
         frequency: 'daily',
         targetValue: '',
         difficulty: 'medium',
-        goalId: ''
+        goalId: '',
+        customDate: ''
     });
 
     useEffect(() => {
@@ -89,7 +90,8 @@ const HabitList = () => {
                 frequency: habit.frequency,
                 targetValue: habit.targetValue || '',
                 difficulty: habit.difficulty,
-                goalId: habit.goalId || ''
+                goalId: habit.goalId || '',
+                customDate: habit.customDate ? format(new Date(habit.customDate), 'yyyy-MM-dd') : ''
             });
         } else {
             setEditingHabit(null);
@@ -100,7 +102,8 @@ const HabitList = () => {
                 frequency: 'daily',
                 targetValue: '',
                 difficulty: 'medium',
-                goalId: ''
+                goalId: '',
+                customDate: ''
             });
         }
         setShowForm(true);
@@ -208,6 +211,19 @@ const HabitList = () => {
                                         </select>
                                     </div>
                                 </div>
+                                
+                                {formData.frequency === 'custom' && (
+                                    <div className="input-group fade-in" style={{ marginTop: '1.5rem' }}>
+                                        <label className="input-label"><Calendar size={14} style={{ marginRight: '0.4rem' }}/> Target Date</label>
+                                        <input 
+                                            type="date" 
+                                            className="input-field" 
+                                            value={formData.customDate} 
+                                            onChange={(e) => setFormData({...formData, customDate: e.target.value})} 
+                                            required 
+                                        />
+                                    </div>
+                                )}
                                 
 
                                 <button type="submit" disabled={submitting} className="btn btn-primary" style={{ width: '100%', padding: '1rem', marginTop: '1.5rem' }}>

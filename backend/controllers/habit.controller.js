@@ -102,11 +102,10 @@ exports.getHabits = asyncHandler(async (req, res) => {
 // @route   POST /api/habits
 // @access  Private
 exports.createHabit = asyncHandler(async (req, res) => {
-  const { title, description, category, frequency, targetValue, difficulty, goalId } = req.body;
+  const { title, description, category, frequency, targetValue, difficulty, goalId, frequencyDays, customDate } = req.body;
   const parsedGoalId = (goalId && goalId !== "" && goalId !== "undefined") ? parseInt(goalId) : null;
 
   try {
-    // Sequential operations to avoid LibSQL interactive transaction quirks
     const habit = await prisma.habit.create({
       data: {
         userId: req.user.id,
@@ -114,6 +113,8 @@ exports.createHabit = asyncHandler(async (req, res) => {
         description,
         category,
         frequency,
+        frequencyDays: frequency === 'weekly' ? "1,2,3,4,5" : frequencyDays, // Weekly = Weekdays
+        customDate: (frequency === 'custom' && customDate) ? new Date(customDate) : null,
         targetValue: targetValue ? parseFloat(targetValue) : null,
         difficulty: difficulty || 'medium',
         goalId: isNaN(parsedGoalId) ? null : parsedGoalId,
@@ -166,7 +167,7 @@ exports.updateHabit = asyncHandler(async (req, res) => {
     throw new Error('Not authorized to update this habit');
   }
 
-  const { title, description, category, frequency, targetValue, difficulty, goalId } = req.body;
+  const { title, description, category, frequency, targetValue, difficulty, goalId, frequencyDays, customDate } = req.body;
   const parsedGoalId = (goalId && goalId !== "") ? parseInt(goalId) : null;
 
   const updatedHabit = await prisma.habit.update({
@@ -176,6 +177,8 @@ exports.updateHabit = asyncHandler(async (req, res) => {
       description,
       category,
       frequency,
+      frequencyDays: frequency === 'weekly' ? "1,2,3,4,5" : frequencyDays, 
+      customDate: (frequency === 'custom' && customDate) ? new Date(customDate) : null,
       targetValue: targetValue ? parseFloat(targetValue) : null,
       difficulty,
       goalId: isNaN(parsedGoalId) ? null : parsedGoalId,

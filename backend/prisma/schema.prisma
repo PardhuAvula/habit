@@ -31,9 +31,11 @@ model Habit {
   title         String
   description   String?
   category      String     // You can use enum but string is more flexible for custom categories
-  frequency     String     // e.g., "daily", "weekly"
+  frequency     String     // "daily", "weekly", "custom"
+  frequencyDays String?    @map("frequency_days") // For "weekly" (weekdays) or specific days
+  customDate    DateTime?  @map("custom_date")    // For "custom" (specific date)
   targetValue   Float?     @map("target_value")
-  difficulty    String     // e.g., "easy", "medium", "hard"
+  difficulty    String     // "easy", "medium", "hard"
   createdAt     DateTime   @default(now()) @map("created_at")
   
   user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)

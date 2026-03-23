@@ -527,29 +527,6 @@ p {
   overflow: hidden;
 }
 
-.thunder-flash {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: white;
-  opacity: 0;
-  z-index: 9999;
-  animation: thunder-strike 6s infinite ease-in-out;
-}
-
-@keyframes thunder-strike {
-  0% { opacity: 0; }
-  2% { opacity: 0.2; }
-  3% { opacity: 0; }
-  5% { opacity: 0.3; }
-  7% { opacity: 0; }
-  30% { opacity: 0.15; }
-  31% { opacity: 0; }
-  100% { opacity: 0; }
-}
-
 .lightning-bolt {
   position: absolute;
   top: -20%;

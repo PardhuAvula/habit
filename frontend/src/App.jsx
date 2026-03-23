@@ -46,7 +46,6 @@ const ProtectedRoute = ({ children }) => {
 
 const ThunderBackground = () => (
   <div className="thunder-overlay">
-    <div className="thunder-flash" />
     <div className="lightning-bolt bolt-1" />
     <div className="lightning-bolt bolt-2" />
     <div className="lightning-bolt bolt-3" />

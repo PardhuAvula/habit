@@ -147,38 +147,55 @@ const Goals = () => {
                             display: 'flex', 
                             alignItems: 'center', 
                             justifyContent: 'center', 
-                            padding: '2rem 1rem', 
+                            padding: '1rem', 
                             backdropFilter: 'blur(12px)',
-                            overflowY: 'auto'
                         }}
                     >
                         <motion.div 
-                            initial={{ scale: 0.9, y: 20 }}
-                            animate={{ scale: 1, y: 0 }}
-                            className="glass-card" 
-                            style={{ width: '100%', maxWidth: '500px', padding: '2.5rem', margin: 'auto' }}
+                            initial={{ scale: 0.95, y: 10, opacity: 0 }}
+                            animate={{ scale: 1, y: 0, opacity: 1 }}
+                            className="glass-card modal-content" 
+                            style={{ 
+                                width: '100%', 
+                                maxWidth: '500px', 
+                                maxHeight: 'calc(100vh - 2rem)',
+                                padding: '1.5rem 2rem', 
+                                margin: 'auto',
+                                overflowY: 'auto',
+                                background: 'var(--bg-card)', 
+                                border: '1px solid var(--border-focus)',
+                                display: 'flex',
+                                flexDirection: 'column'
+                            }}
                         >
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-                                <h2 style={{ margin: 0 }}>New Objective</h2>
-                                <button onClick={() => setShowForm(false)} className="btn btn-ghost" style={{ padding: '0.5rem' }}><X size={24} /></button>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexShrink: 0 }}>
+                                <div>
+                                    <h2 style={{ margin: 0, fontSize: '1.5rem' }}>New Objective</h2>
+                                    <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', margin: '0.125rem 0 0' }}>Define your long-term target</p>
+                                </div>
+                                <button onClick={() => setShowForm(false)} className="btn btn-ghost" style={{ padding: '0.4rem', borderRadius: '50%' }}><X size={20} /></button>
                             </div>
-                            <form onSubmit={handleSubmit}>
+                            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
                                 <div className="input-group">
-                                    <label className="input-label">Objective Title</label>
-                                    <input className="input-field" value={formData.title} onChange={(e) => setFormData({...formData, title: e.target.value})} placeholder="e.g. Run a Marathon, Save $10k..." required />
+                                    <label className="input-label" style={{ fontSize: '0.8125rem' }}>Objective Title</label>
+                                    <input className="input-field" value={formData.title} onChange={(e) => setFormData({...formData, title: e.target.value})} placeholder="e.g. Run a Marathon, Save $10k..." required style={{ padding: '0.75rem 1rem' }} />
                                 </div>
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+                                <div className="modal-grid">
                                     <div className="input-group">
-                                        <label className="input-label">Target Milestone</label>
-                                        <input type="number" className="input-field" value={formData.targetValue} onChange={(e) => setFormData({...formData, targetValue: e.target.value})} placeholder="Numeric value" required />
+                                        <label className="input-label" style={{ fontSize: '0.8125rem' }}>Target Milestone</label>
+                                        <input type="number" className="input-field" value={formData.targetValue} onChange={(e) => setFormData({...formData, targetValue: e.target.value})} placeholder="Numeric" required style={{ padding: '0.75rem 1rem' }} />
                                     </div>
                                     <div className="input-group">
-                                        <label className="input-label">Target Date</label>
-                                        <input type="date" className="input-field" value={formData.deadline} onChange={(e) => setFormData({...formData, deadline: e.target.value})} />
+                                        <label className="input-label" style={{ fontSize: '0.8125rem' }}>Target Date</label>
+                                        <input type="date" className="input-field" value={formData.deadline} onChange={(e) => setFormData({...formData, deadline: e.target.value})} style={{ padding: '0.75rem 1rem' }} />
                                     </div>
                                 </div>
-                                <button type="submit" disabled={submitting} className="btn btn-primary" style={{ width: '100%', padding: '1rem', marginTop: '1.5rem' }}>
-                                    <Save size={18} /> {submitting ? 'Initializing...' : 'Initialize Objective'}
+                                <button type="submit" disabled={submitting} className="btn btn-primary" style={{ width: '100%', padding: '0.875rem', marginTop: '0.5rem', fontSize: '0.9375rem', borderRadius: 'var(--radius-lg)', flexShrink: 0 }}>
+                                    {submitting ? (
+                                        <>Initializing...</>
+                                    ) : (
+                                        <><Save size={16} /> Initialize Objective</>
+                                    )}
                                 </button>
                             </form>
                         </motion.div>

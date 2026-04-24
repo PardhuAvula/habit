@@ -14,7 +14,7 @@ async function test() {
     });
 
     const adapter = new PrismaLibSql(client);
-    const prisma = new PrismaClient({ adapter });
+    const prisma = new PrismaClient({ adapter, url: connectionString });
 
     try {
         console.log("Querying users...");

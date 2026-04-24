@@ -62,9 +62,9 @@ const TaskManager = () => {
 
     return (
         <div className="glass-card" style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '1.25rem' }}>
-                    <Sword className="anime-aura" style={{ color: 'var(--primary)' }} /> Mission Log
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                <h3 style={{ display: 'flex', alignItems: 'center', gap: '1rem', fontSize: '1.75rem', fontWeight: 950, fontFamily: 'var(--font-anime)', letterSpacing: '2px' }}>
+                    <Sword className="anime-aura" style={{ color: 'var(--primary)', width: '28px', height: '28px' }} /> Mission Log
                 </h3>
                 <div style={{ position: 'relative' }}>
                     <input 
@@ -106,12 +106,13 @@ const TaskManager = () => {
                                 exit={{ opacity: 0, x: 20 }}
                                 className="glass-card"
                                 style={{ 
-                                    padding: '1rem', 
+                                    padding: '1.5rem', 
                                     display: 'flex', 
                                     alignItems: 'center', 
-                                    gap: '1rem',
-                                    background: task.isCompleted ? 'rgba(16, 185, 129, 0.1)' : 'rgba(255, 255, 255, 0.03)',
-                                    borderColor: task.isCompleted ? 'var(--success)' : 'var(--border)'
+                                    gap: '1.25rem',
+                                    background: task.isCompleted ? 'rgba(16, 185, 129, 0.15)' : 'rgba(255, 255, 255, 0.05)',
+                                    border: task.isCompleted ? '1px solid var(--success)' : '1px solid rgba(255,255,255,0.1)',
+                                    borderRadius: '1rem'
                                 }}
                             >
                                 <button 

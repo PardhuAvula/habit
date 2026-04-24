@@ -132,70 +132,67 @@ const Goals = () => {
                     <Plus size={20} /> New Goal
                 </button>
             </header>
-
             <AnimatePresence>
                 {showForm && (
                     <motion.div 
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
+                        className="modal-overlay"
                         style={{ 
                             position: 'fixed', 
                             top: 0, left: 0, right: 0, bottom: 0, 
-                            background: 'rgba(2, 6, 23, 0.85)', 
                             zIndex: 5000, 
                             display: 'flex', 
                             alignItems: 'center', 
                             justifyContent: 'center', 
                             padding: '1rem', 
-                            backdropFilter: 'blur(12px)',
                         }}
                     >
                         <motion.div 
-                            initial={{ scale: 0.95, y: 10, opacity: 0 }}
+                            initial={{ scale: 0.9, y: 20, opacity: 0 }}
                             animate={{ scale: 1, y: 0, opacity: 1 }}
-                            className="glass-card modal-content" 
+                            exit={{ scale: 0.9, y: 20, opacity: 0 }}
+                            transition={{ type: "spring", damping: 20, stiffness: 300 }}
+                            className="glass-card" 
                             style={{ 
                                 width: '100%', 
-                                maxWidth: '500px', 
-                                maxHeight: 'calc(100vh - 2rem)',
-                                padding: '1.5rem 2rem', 
-                                margin: 'auto',
-                                overflowY: 'auto',
-                                background: 'var(--bg-card)', 
-                                border: '1px solid var(--border-focus)',
+                                maxWidth: '600px', 
+                                maxHeight: 'calc(100vh - 4rem)',
+                                padding: '3.5rem', 
+                                background: 'rgba(15, 12, 25, 0.98)', 
+                                border: '2px solid var(--accent-glow)',
+                                boxShadow: '0 0 60px rgba(255, 0, 0, 0.2)',
                                 display: 'flex',
-                                flexDirection: 'column'
+                                flexDirection: 'column',
+                                borderRadius: '2.5rem',
+                                color: '#fff'
                             }}
                         >
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexShrink: 0 }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem' }}>
                                 <div>
-                                    <h2 style={{ margin: 0, fontSize: '1.5rem' }}>New Objective</h2>
-                                    <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', margin: '0.125rem 0 0' }}>Define your long-term target</p>
+                                    <h2 style={{ margin: 0, fontSize: '2rem', fontFamily: 'var(--font-anime)', letterSpacing: '2px' }}>Initialize Objective</h2>
+                                    <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginTop: '0.5rem' }}>Set your sights on the horizon</p>
                                 </div>
-                                <button onClick={() => setShowForm(false)} className="btn btn-ghost" style={{ padding: '0.4rem', borderRadius: '50%' }}><X size={20} /></button>
+                                <button onClick={() => setShowForm(false)} className="btn btn-ghost" style={{ padding: '0.6rem', borderRadius: '50%', background: 'rgba(255,255,255,0.05)' }}><X size={24} /></button>
                             </div>
-                            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
                                 <div className="input-group">
-                                    <label className="input-label" style={{ fontSize: '0.8125rem' }}>Objective Title</label>
-                                    <input className="input-field" value={formData.title} onChange={(e) => setFormData({...formData, title: e.target.value})} placeholder="e.g. Run a Marathon, Save $10k..." required style={{ padding: '0.75rem 1rem' }} />
+                                    <label className="input-label" style={{ fontSize: '0.9rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--text-secondary)', display: 'block' }}>Objective Signature</label>
+                                    <input className="input-field" value={formData.title} onChange={(e) => setFormData({...formData, title: e.target.value})} placeholder="e.g. Master the Blade, Save 10,000 Credits..." required style={{ width: '100%', padding: '1rem 1.5rem', fontSize: '1rem' }} />
                                 </div>
-                                <div className="modal-grid">
+                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
                                     <div className="input-group">
-                                        <label className="input-label" style={{ fontSize: '0.8125rem' }}>Target Milestone</label>
-                                        <input type="number" className="input-field" value={formData.targetValue} onChange={(e) => setFormData({...formData, targetValue: e.target.value})} placeholder="Numeric" required style={{ padding: '0.75rem 1rem' }} />
+                                        <label className="input-label" style={{ fontSize: '0.9rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--text-secondary)', display: 'block' }}>Success Threshold</label>
+                                        <input type="number" className="input-field" value={formData.targetValue} onChange={(e) => setFormData({...formData, targetValue: e.target.value})} placeholder="Numeric Target" required style={{ width: '100%', padding: '1rem 1.5rem' }} />
                                     </div>
                                     <div className="input-group">
-                                        <label className="input-label" style={{ fontSize: '0.8125rem' }}>Target Date</label>
-                                        <input type="date" className="input-field" value={formData.deadline} onChange={(e) => setFormData({...formData, deadline: e.target.value})} style={{ padding: '0.75rem 1rem' }} />
+                                        <label className="input-label" style={{ fontSize: '0.9rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--text-secondary)', display: 'block' }}>Expiration Date</label>
+                                        <input type="date" className="input-field" value={formData.deadline} onChange={(e) => setFormData({...formData, deadline: e.target.value})} style={{ width: '100%', padding: '1rem 1.5rem' }} />
                                     </div>
                                 </div>
-                                <button type="submit" disabled={submitting} className="btn btn-primary" style={{ width: '100%', padding: '0.875rem', marginTop: '0.5rem', fontSize: '0.9375rem', borderRadius: 'var(--radius-lg)', flexShrink: 0 }}>
-                                    {submitting ? (
-                                        <>Initializing...</>
-                                    ) : (
-                                        <><Save size={16} /> Initialize Objective</>
-                                    )}
+                                <button type="submit" disabled={submitting} className="btn btn-primary" style={{ width: '100%', padding: '1.25rem', marginTop: '1rem', fontSize: '1.1rem', borderRadius: '1.25rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem' }}>
+                                    {submitting ? 'Initializing...' : <><Save size={20} /> Initialize Protocol</>}
                                 </button>
                             </form>
                         </motion.div>

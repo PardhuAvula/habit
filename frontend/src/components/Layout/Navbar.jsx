@@ -19,10 +19,10 @@ const Navbar = () => {
   };
 
   const menuItems = [
-    { to: '/', icon: <LayoutDashboard size={18} />, label: 'Dashboard' },
-    { to: '/habits', icon: <CheckSquare size={18} />, label: 'Habits' },
-    { to: '/analytics', icon: <BarChart2 size={18} />, label: 'Insights' },
-    { to: '/goals', icon: <Target size={18} />, label: 'Objectives' },
+    { to: '/', icon: <LayoutDashboard size={22} />, label: 'Dashboard' },
+    { to: '/habits', icon: <CheckSquare size={22} />, label: 'Habits' },
+    { to: '/analytics', icon: <BarChart2 size={22} />, label: 'Insights' },
+    { to: '/goals', icon: <Target size={22} />, label: 'Objectives' },
   ];
 
   if (!user) return null;
@@ -54,11 +54,23 @@ const Navbar = () => {
 
           <div className="nav-actions">
             {/* XP Summary - Hide text on mobile for more space */}
-            <div className="nav-xp-summary" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.4rem 0.8rem', background: 'var(--primary-glow)', borderRadius: '2rem', border: '1px solid var(--border-focus)' }}>
-              <Zap size={14} color="var(--accent)" fill="var(--accent)" />
-              <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
-                <span style={{ fontSize: '0.65rem', fontWeight: 800, color: 'var(--text-muted)' }}>LVL {user.level}</span>
-                <span style={{ fontSize: '0.6rem', fontWeight: 700, color: 'var(--accent)' }}>{user.xp} XP</span>
+            <div className="nav-xp-summary" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.4rem 1rem 0.4rem 0.5rem', background: 'rgba(255, 255, 255, 0.03)', borderRadius: '2rem', border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)' }}>
+              <div style={{ 
+                width: '32px', 
+                height: '32px', 
+                borderRadius: '50%', 
+                background: 'linear-gradient(135deg, var(--primary), var(--accent))', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                boxShadow: '0 0 10px var(--primary-glow)',
+                border: '1px solid rgba(255,255,255,0.2)'
+              }}>
+                <span style={{ fontSize: '0.85rem', fontWeight: 900, color: '#fff', fontFamily: 'var(--font-anime)' }}>{user.level}</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.2rem' }}>
+                <span style={{ fontSize: '0.95rem', fontWeight: 900, color: '#fff', fontFamily: 'var(--font-sans)' }}>{user.xp}</span>
+                <span style={{ fontSize: '0.65rem', fontWeight: 800, color: 'var(--primary)', letterSpacing: '1px' }}>XP</span>
               </div>
             </div>
 
@@ -91,8 +103,8 @@ const Navbar = () => {
 
 
 
-                <span className="nav-user-name" style={{ fontWeight: 600, fontSize: '0.875rem', color: 'var(--text-main)' }}>{user.name.split(' ')[0]}</span>
-                <ChevronDown size={14} color="var(--text-muted)" style={{ transform: isProfileMenuOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+                <span className="nav-user-name" style={{ fontWeight: 900, fontSize: '1rem', color: '#fff', fontFamily: 'var(--font-anime)', letterSpacing: '1px' }}>{user.name}</span>
+                <ChevronDown size={18} color="var(--primary-light)" style={{ transform: isProfileMenuOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
               </button>
 
               <AnimatePresence>

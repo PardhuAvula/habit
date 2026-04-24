@@ -194,42 +194,42 @@ const Dashboard = () => {
         >
             <header className="dashboard-header" style={{ marginBottom: '2.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: '1.5rem', flexWrap: 'wrap' }}>
                 <div>
-                    <h1 style={{ marginBottom: '0.5rem', fontSize: '2.5rem', fontWeight: 800 }}>Overview</h1>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: 'var(--text-muted)', flexWrap: 'wrap' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                            <Calendar size={18} />
-                            <span style={{ fontSize: '1rem', fontWeight: 600 }}>{format(currentTime, 'EEEE, MMMM do yyyy')}</span>
+                    <h1 style={{ marginBottom: '0.75rem', fontSize: '3.5rem', fontWeight: 900, fontFamily: 'var(--font-impact)', letterSpacing: '4px', background: 'linear-gradient(to bottom, #fff, #94a3b8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>DASHBOARD</h1>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', color: 'var(--text-muted)', flexWrap: 'wrap' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                            <Calendar size={20} className="anime-aura" />
+                            <span style={{ fontSize: '1.125rem', fontWeight: 700, color: '#fff' }}>{format(currentTime, 'EEEE, MMMM do yyyy')}</span>
                         </div>
-                        <div className="dot-divider" style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'var(--border-focus)' }}></div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--primary-light)' }}>
-                            <Clock size={18} />
-                            <span style={{ fontSize: '1rem', fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>{format(currentTime, 'hh:mm:ss a')}</span>
+                        <div style={{ width: '1px', height: '24px', background: 'var(--border)' }}></div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'var(--primary-light)' }}>
+                            <Clock size={20} />
+                            <span style={{ fontSize: '1.125rem', fontWeight: 800, fontVariantNumeric: 'tabular-nums', letterSpacing: '2px' }}>{format(currentTime, 'hh:mm:ss a')}</span>
                         </div>
                     </div>
                 </div>
-                <div style={{ display: 'flex', gap: '1rem' }}>
-                    <Link to="/goals" className="btn btn-ghost" style={{ border: '1px solid var(--border)' }}>
-                        <Target size={18} /> Objectives
+                <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+                    <Link to="/goals" className="btn btn-ghost" style={{ border: '2px solid var(--border)', padding: '1rem 2rem', fontSize: '1rem', borderRadius: '1rem' }}>
+                        <Target size={20} /> Objectives
                     </Link>
-                    <Link to="/habits" className="btn btn-primary">
-                        <Plus size={18} /> New Habit
+                    <Link to="/habits" className="btn btn-primary" style={{ padding: '1rem 2.5rem', fontSize: '1.125rem', borderRadius: '1rem', boxShadow: '0 8px 30px var(--primary-glow)' }}>
+                        <Plus size={22} /> New Habit
                     </Link>
                 </div>
             </header>
 
             <div className="dashboard-grid">
                 <motion.div 
-                    whileHover={{ scale: 1.01 }}
+                    whileHover={{ scale: 1.02, y: -5 }}
                     className="col-span-6 glass-card" 
                     style={{ 
                         position: 'relative',
                         display: 'flex', 
-                        gap: '1.5rem', 
+                        gap: '2rem', 
                         alignItems: 'center', 
-                        background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(16, 185, 129, 0.1) 100%)',
+                        background: 'linear-gradient(135deg, rgba(255, 140, 0, 0.15) 0%, rgba(0, 0, 0, 0.4) 100%)',
                         border: '1px solid var(--primary-glow)',
                         overflow: 'hidden',
-                        padding: '1.5rem'
+                        padding: '2.5rem'
                     }}
                 >
                     <div style={{ padding: '1.25rem', borderRadius: '1.25rem', backgroundColor: 'rgba(255, 255, 255, 0.04)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary)' }}>
@@ -253,17 +253,17 @@ const Dashboard = () => {
                 </motion.div>
 
                 <motion.div 
-                    whileHover={{ scale: 1.01 }}
+                    whileHover={{ scale: 1.02, y: -5 }}
                     className="col-span-6 glass-card" 
                     style={{ 
                         position: 'relative',
                         display: 'flex', 
-                        gap: '1.5rem', 
+                        gap: '2rem', 
                         alignItems: 'center', 
-                        background: 'linear-gradient(135deg, rgba(234, 88, 12, 0.2) 0%, rgba(245, 158, 11, 0.1) 100%)',
-                        border: '1px solid rgba(234, 88, 12, 0.3)',
+                        background: 'linear-gradient(135deg, rgba(255, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.4) 100%)',
+                        border: '1px solid var(--accent-glow)',
                         overflow: 'hidden',
-                        padding: '1.5rem'
+                        padding: '2.5rem'
                     }}
                 >
                     <div style={{ padding: '1.25rem', borderRadius: '1.25rem', backgroundColor: 'rgba(255, 255, 255, 0.04)', border: '1px solid rgba(234, 88, 12, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#f97316' }}>
@@ -290,9 +290,9 @@ const Dashboard = () => {
                 </motion.div>
 
                 <div className="col-span-8">
-                    <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem' }}>
+                    <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3.5rem' }}>
                         <div>
-                             <h2 style={{ fontSize: '2.25rem', fontWeight: 900, marginBottom: '0.4rem', background: 'linear-gradient(to right, #fff, var(--text-muted))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Daily Rituals</h2>
+                             <h2 style={{ fontSize: '2.75rem', fontWeight: 950, marginBottom: '0.6rem', fontFamily: 'var(--font-anime)', letterSpacing: '3px' }}>Daily Rituals</h2>
                              <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
                                 <span className="badge badge-primary" style={{ padding: '0.3rem 0.8rem', fontSize: '0.7rem' }}>{habits.filter(h => !h.completedToday).length} PENDING</span>
                                 <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: isUpdating ? 'var(--primary)' : 'var(--success)' }}></div>
@@ -302,21 +302,23 @@ const Dashboard = () => {
 
                              </div>
                         </div>
-                        <div style={{ display: 'flex', background: 'rgba(255,255,255,0.03)', padding: '0.4rem', borderRadius: '1.25rem', border: '1px solid var(--border)' }}>
+                        <div style={{ display: 'flex', background: 'rgba(255,255,255,0.05)', padding: '0.5rem', borderRadius: '1.25rem', border: '1px solid var(--border)' }}>
                              {['All', 'Pending', 'Done'].map(t => (
                                  <button 
                                     key={t}
                                     onClick={() => setFilter(t.toLowerCase())}
                                     style={{ 
-                                        padding: '0.6rem 1.5rem', 
+                                        padding: '0.8rem 2rem', 
                                         borderRadius: '1rem', 
                                         border: 'none', 
                                         background: filter === t.toLowerCase() ? 'var(--primary)' : 'transparent',
-                                        color: filter === t.toLowerCase() ? '#fff' : 'var(--text-muted)',
+                                        color: filter === t.toLowerCase() ? '#fff' : 'var(--text-secondary)',
                                         cursor: 'pointer',
-                                        fontSize: '0.8125rem',
-                                        fontWeight: 800,
-                                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+                                        fontSize: '1rem',
+                                        fontWeight: 900,
+                                        fontFamily: 'var(--font-anime)',
+                                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                                        letterSpacing: '1px'
                                     }}
                                  >
                                      {t}

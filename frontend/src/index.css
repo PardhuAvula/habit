@@ -12,13 +12,13 @@
   
   --energy: #ffff00; /* Lightning/Aura Yellow */
   
-  --bg-dark: #0a0a0c;
-  --bg-card: rgba(20, 20, 25, 0.6);
-  --bg-glass: rgba(15, 15, 20, 0.4);
+  --bg-dark: #020617;
+  --bg-card: rgba(15, 12, 25, 0.75);
+  --bg-glass: rgba(10, 8, 20, 0.45);
   
   --text-main: #ffffff;
-  --text-secondary: #cbd5e1;
-  --text-muted: #64748b;
+  --text-secondary: #e2e8f0;
+  --text-muted: #94a3b8;
   
   --danger: #ef4444;
   --success: #10b981;
@@ -44,13 +44,33 @@
 
 body {
   background-color: var(--bg-dark);
+  background-image: url('/anime_bg.jpg'); /* New 4K Aura Background */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
   color: var(--text-main);
   font-family: var(--font-sans);
   min-height: 100vh;
   overflow-x: hidden;
-  background-image: 
-    radial-gradient(circle at 20% 20%, rgba(255, 140, 0, 0.05), transparent),
-    radial-gradient(circle at 80% 80%, rgba(255, 0, 0, 0.05), transparent);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, transparent, rgba(2, 6, 23, 0.5));
+  pointer-events: none;
+  z-index: -1;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
 }
 
 h1, h2, h3 {
@@ -60,14 +80,23 @@ h1, h2, h3 {
 }
 
 .glass-card {
-  background: var(--bg-glass);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid var(--border);
+  background: rgba(15, 12, 25, 0.8);
+  backdrop-filter: blur(30px) saturate(200%);
+  -webkit-backdrop-filter: blur(30px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: var(--radius-xl);
-  padding: 1.5rem;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  padding: 2.5rem;
+  box-shadow: 0 20px 50px 0 rgba(0, 0, 0, 0.8);
   transition: var(--transition);
+}
+
+.modal-overlay {
+  animation: modalFadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modalFadeIn {
+  from { background: rgba(0,0,0,0); backdrop-filter: blur(0); }
+  to { background: rgba(2, 6, 23, 0.85); backdrop-filter: blur(20px); }
 }
 
 .glass-card:hover {
@@ -153,17 +182,114 @@ h1, h2, h3 {
 
 /* Input Field Glassy */
 .input-field {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(15, 12, 25, 0.9); /* Darker for better visibility */
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 0.8rem 1.2rem;
   color: white;
   outline: none;
   transition: var(--transition);
+  font-family: var(--font-sans);
 }
 
 .input-field:focus {
   border-color: var(--primary);
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 0 15px var(--primary-glow);
+  background: rgba(20, 15, 30, 1);
+  box-shadow: 0 0 20px var(--primary-glow);
+}
+
+/* Fix for white dropdowns */
+.input-field option {
+  background-color: #1a1a2e;
+  color: white;
+  padding: 10px;
+}
+
+/* Navbar Styles */
+.navbar {
+  height: 90px;
+  background: rgba(10, 10, 12, 0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+}
+
+.nav-container {
+  width: 100%;
+  max-width: 1600px; /* Wider for more room */
+  margin: 0 auto;
+  padding: 0 3rem;
+}
+
+.nav-content {
+  display: flex;
+  justify-content: flex-start; /* Changed from space-between */
+  align-items: center;
+  width: 100%;
+  gap: 6rem; /* Huge gap between Logo and Nav as requested */
+}
+
+.nav-logo {
+  text-decoration: none;
+  font-family: var(--font-impact);
+  font-size: 2.5rem !important; /* Bigger as requested */
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, var(--primary), var(--energy));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: var(--transition);
+}
+
+.nav-logo:hover {
+  filter: drop-shadow(0 0 10px var(--primary-glow));
+  transform: scale(1.05);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 3.5rem; /* Wide as requested */
+}
+
+.nav-item {
+  color: var(--text-secondary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: var(--font-anime);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: var(--transition);
+  padding: 0.5rem 0;
+  border-bottom: 2px solid transparent;
+}
+
+.nav-item:hover, .nav-item.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-left: auto; /* Push to right just in case */
+}
+
+.profile-trigger {
+  padding: 0.5rem;
+  border-radius: 1rem;
+  transition: var(--transition);
+}
+
+.profile-trigger:hover {
+  background: rgba(255, 255, 255, 0.05);
 }

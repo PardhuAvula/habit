@@ -144,57 +144,61 @@ const HabitList = () => {
                 </header>
 
                 {showForm && (
-                    <div style={{ 
+                     <div className="modal-overlay" style={{ 
                         position: 'fixed', 
                         top: 0, left: 0, right: 0, bottom: 0, 
-                        background: 'rgba(2, 6, 23, 0.85)', 
                         zIndex: 5000, 
                         display: 'flex', 
                         alignItems: 'center', 
                         justifyContent: 'center', 
                         padding: '1rem', 
-                        backdropFilter: 'blur(12px)',
                     }}>
                         <motion.div 
-                            initial={{ scale: 0.95, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            className="glass-card modal-content" 
+                            initial={{ scale: 0.9, y: 30, opacity: 0 }}
+                            animate={{ scale: 1, y: 0, opacity: 1 }}
+                            exit={{ scale: 0.9, y: 30, opacity: 0 }}
+                            transition={{ type: "spring", damping: 20, stiffness: 300 }}
+                            className="glass-card" 
                             style={{ 
                                 width: '100%', 
-                                maxWidth: '580px', 
-                                maxHeight: 'calc(100vh - 2rem)',
-                                background: 'var(--bg-card)', 
-                                border: '1px solid var(--border-focus)', 
-                                padding: '1.5rem 2rem', 
-                                margin: 'auto',
-                                overflowY: 'auto',
+                                maxWidth: '700px', 
+                                maxHeight: 'calc(100vh - 4rem)',
+                                padding: '3.5rem', 
+                                background: 'rgba(15, 12, 25, 0.98)', 
+                                border: '2px solid var(--primary-glow)',
+                                boxShadow: '0 0 60px rgba(255, 140, 0, 0.2)',
                                 display: 'flex',
-                                flexDirection: 'column'
+                                flexDirection: 'column',
+                                borderRadius: '2.5rem',
+                                color: '#fff',
+                                overflowY: 'auto'
                             }}
                         >
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexShrink: 0 }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
                                 <div>
-                                    <h2 style={{ margin: 0, fontSize: '1.5rem', letterSpacing: '-0.02em', color: 'var(--text-main)' }}>{editingHabit ? 'Edit Protocol' : 'New Habit'}</h2>
-                                    <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', margin: '0.125rem 0 0' }}>Step towards your excellence</p>
+                                    <h2 style={{ margin: 0, fontSize: '2.25rem', fontFamily: 'var(--font-anime)', letterSpacing: '2px', background: 'linear-gradient(to right, #fff, var(--primary))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{editingHabit ? 'Edit Protocol' : 'Initialize Protocol'}</h2>
+                                    <p style={{ fontSize: '1rem', color: 'var(--text-muted)', marginTop: '0.5rem' }}>Define a new sequence for neural growth</p>
                                 </div>
-                                <button onClick={closeForm} className="btn btn-ghost" style={{ padding: '0.4rem', borderRadius: '50%' }}><X size={20} /></button>
+                                <button onClick={closeForm} className="btn btn-ghost" style={{ padding: '0.6rem', borderRadius: '50%', background: 'rgba(255,255,255,0.05)' }}><X size={28} /></button>
                             </div>
-                            
-                            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                                <div className="modal-grid">
-                                    <div className="input-group" style={{ gridColumn: 'span 2' }}>
-                                        <label className="input-label" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8125rem' }}><Activity size={12} /> Protocol Name</label>
-                                        <input className="input-field" value={formData.title} onChange={(e) => setFormData({...formData, title: e.target.value})} placeholder="e.g. 5am Bio-Optimization" required style={{ padding: '0.75rem 1rem' }} />
-                                    </div>
 
-                                    <div className="input-group" style={{ gridColumn: 'span 2' }}>
-                                        <label className="input-label" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8125rem' }}>Protocol Details (Optional)</label>
-                                        <textarea className="input-field" style={{ minHeight: '60px', resize: 'none', padding: '0.75rem 1rem' }} value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} placeholder="Define core purpose..."></textarea>
-                                    </div>
+                            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                                <div className="input-group">
+                                    <label className="input-label" style={{ fontSize: '0.96rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1.5px', color: 'var(--primary-light)', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                       <Activity size={16} /> Protocol Designation
+                                    </label>
+                                    <input className="input-field" value={formData.title} onChange={(e) => setFormData({...formData, title: e.target.value})} placeholder="e.g. 5AM Neural Sync, Heavy Gravity Sprints..." required style={{ width: '100%', padding: '1.25rem 1.75rem', fontSize: '1.15rem' }} />
+                                </div>
 
+                                <div className="input-group">
+                                    <label className="input-label" style={{ fontSize: '0.96rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1.5px', color: 'var(--text-secondary)', marginBottom: '0.75rem', display: 'block' }}>Operational Details</label>
+                                    <textarea className="input-field" style={{ minHeight: '100px', resize: 'none', padding: '1.25rem 1.75rem', fontSize: '1.05rem', lineHeight: 1.6 }} value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} placeholder="Define the parameters of this ritual..."></textarea>
+                                </div>
+
+                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
                                     <div className="input-group">
-                                        <label className="input-label" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8125rem' }}><Layout size={12} /> Category</label>
-                                        <select className="input-field" value={formData.category} onChange={(e) => setFormData({...formData, category: e.target.value})} style={{ padding: '0.75rem 1rem' }}>
+                                        <label className="input-label" style={{ fontSize: '0.96rem', fontWeight: 800, color: 'var(--text-secondary)', marginBottom: '0.5rem', display: 'block' }}>Category Cluster</label>
+                                        <select className="input-field" value={formData.category} onChange={(e) => setFormData({...formData, category: e.target.value})} style={{ width: '100%', padding: '1.1rem 1.5rem' }}>
                                             <option>Productivity</option>
                                             <option>Health</option>
                                             <option>Social</option>
@@ -205,9 +209,9 @@ const HabitList = () => {
                                     </div>
 
                                     <div className="input-group">
-                                        <label className="input-label" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8125rem' }}><Target size={12} /> Link Objective</label>
-                                        <select className="input-field" value={formData.goalId} onChange={(e) => setFormData({...formData, goalId: e.target.value})} style={{ padding: '0.75rem 1rem' }}>
-                                            <option value="">-- None --</option>
+                                        <label className="input-label" style={{ fontSize: '0.96rem', fontWeight: 800, color: 'var(--text-secondary)', marginBottom: '0.5rem', display: 'block' }}>Target Objective</label>
+                                        <select className="input-field" value={formData.goalId} onChange={(e) => setFormData({...formData, goalId: e.target.value})} style={{ width: '100%', padding: '1.1rem 1.5rem' }}>
+                                            <option value="">-- No Link --</option>
                                             {(goals || []).map(g => (
                                                 <option key={g.id} value={g.id}>{g.title}</option>
                                             ))}
@@ -215,50 +219,50 @@ const HabitList = () => {
                                     </div>
 
                                     <div className="input-group">
-                                        <label className="input-label" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8125rem' }}><Clock size={12} /> Frequency</label>
-                                        <select className="input-field" value={formData.frequency} onChange={(e) => setFormData({...formData, frequency: e.target.value})} style={{ padding: '0.75rem 1rem' }}>
-                                            <option value="daily">Daily</option>
-                                            <option value="weekly">Weekly (Mon-Fri)</option>
-                                            <option value="custom">Custom Date</option>
+                                        <label className="input-label" style={{ fontSize: '0.96rem', fontWeight: 800, color: 'var(--text-secondary)', marginBottom: '0.5rem', display: 'block' }}>Rhythm Cypher</label>
+                                        <select className="input-field" value={formData.frequency} onChange={(e) => setFormData({...formData, frequency: e.target.value})} style={{ width: '100%', padding: '1.1rem 1.5rem' }}>
+                                            <option value="daily">Daily Cycle</option>
+                                            <option value="weekly">Hyperbolic Week (Mon-Fri)</option>
+                                            <option value="custom">Singular Instance (Custom)</option>
                                         </select>
                                     </div>
 
                                     <div className="input-group">
-                                        <label className="input-label" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8125rem' }}><Zap size={12} /> Effort Tier</label>
-                                        <select className="input-field" value={formData.difficulty} onChange={(e) => setFormData({...formData, difficulty: e.target.value})} style={{ padding: '0.75rem 1rem' }}>
-                                            <option value="easy">Easy (10 XP)</option>
-                                            <option value="medium">Medium (25 XP)</option>
-                                            <option value="hard">Hard (50 XP)</option>
+                                        <label className="input-label" style={{ fontSize: '0.96rem', fontWeight: 800, color: 'var(--text-secondary)', marginBottom: '0.5rem', display: 'block' }}>Energy Required</label>
+                                        <select className="input-field" value={formData.difficulty} onChange={(e) => setFormData({...formData, difficulty: e.target.value})} style={{ width: '100%', padding: '1.1rem 1.5rem' }}>
+                                            <option value="easy">Easy Mastery (+10 XP)</option>
+                                            <option value="medium">Standard Training (+25 XP)</option>
+                                            <option value="hard">Elite Conditioning (+50 XP)</option>
                                         </select>
                                     </div>
+                                </div>
 
+                                <AnimatePresence>
                                     {formData.frequency === 'custom' && (
                                         <motion.div 
-                                            initial={{ opacity: 0, height: 0 }}
-                                            animate={{ opacity: 1, height: 'auto' }}
+                                            initial={{ opacity: 0, scale: 0.95 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            exit={{ opacity: 0, scale: 0.95 }}
                                             className="input-group" 
-                                            style={{ gridColumn: 'span 2' }}
+                                            style={{ padding: '2rem', background: 'rgba(255, 140, 0, 0.05)', borderRadius: '1.5rem', border: '1px dashed var(--primary-glow)' }}
                                         >
-                                            <label className="input-label" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8125rem' }}><Calendar size={12} /> Activation Date</label>
+                                            <label className="input-label" style={{ fontSize: '0.96rem', fontWeight: 900, color: 'var(--primary)', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                                <Calendar size={16} /> Activation Timestamp
+                                            </label>
                                             <input 
                                                 type="date" 
                                                 className="input-field" 
                                                 value={formData.customDate} 
                                                 onChange={(e) => setFormData({...formData, customDate: e.target.value})} 
                                                 required 
-                                                style={{ padding: '0.75rem 1rem' }}
+                                                style={{ width: '100%', padding: '1.1rem' }}
                                             />
                                         </motion.div>
                                     )}
-                                </div>
-                                
+                                </AnimatePresence>
 
-                                <button type="submit" disabled={submitting} className="btn btn-primary" style={{ width: '100%', padding: '0.875rem', marginTop: '0.5rem', fontSize: '0.9375rem', borderRadius: 'var(--radius-lg)', flexShrink: 0 }}>
-                                    {submitting ? (
-                                        <>Synchronizing...</>
-                                    ) : (
-                                        <><Save size={16} /> {editingHabit ? 'Update Protocol' : 'Initialize Protocol'}</>
-                                    )}
+                                <button type="submit" disabled={submitting} className="btn btn-primary" style={{ width: '100%', padding: '1.6rem', fontSize: '1.3rem', borderRadius: '1.5rem', marginTop: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', boxShadow: '0 10px 40px var(--primary-glow)' }}>
+                                    {submitting ? 'Synchronizing Archive...' : <><Save size={24} /> {editingHabit ? 'Confirm Modification' : 'Initialize Protocol'}</>}
                                 </button>
                             </form>
                         </motion.div>

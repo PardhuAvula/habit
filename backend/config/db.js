@@ -22,14 +22,12 @@ if (connectionString.startsWith('file:') && !connectionString.includes(':') || c
 }
 
 // Initialize LibSQL client
-console.log('Connecting to LibSQL with URL:', connectionString);
 const client = createClient({
   url: connectionString,
   authToken: authToken,
 });
 
 // Initialize Prisma with the adapter
-console.log('Initializing Prisma Client with adapter...');
 const adapter = new PrismaLibSql(client);
 const prisma = new PrismaClient({ adapter });
 

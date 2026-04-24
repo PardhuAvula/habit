@@ -20,8 +20,22 @@ model User {
   createdAt    DateTime @default(now()) @map("created_at")
   habits       Habit[]
   goals        Goal[]
+  tasks        Task[]
 
   @@map("users")
+}
+
+model Task {
+  id          Int      @id @default(autoincrement())
+  userId      Int      @map("user_id")
+  title       String
+  date        DateTime @default(now())
+  isCompleted Boolean  @default(false) @map("is_completed")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("tasks")
 }
 
 

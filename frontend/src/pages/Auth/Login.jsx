@@ -56,16 +56,12 @@ const Login = () => {
 
   return (
     <div className="auth-page" style={{ position: 'relative', overflow: 'hidden' }}>
-      {/* Background Video */}
-      <video 
-        autoPlay 
-        muted 
-        loop 
-        playsInline 
-        className="login-bg-video"
-      >
-        <source src="/videos/bg-intro.mp4" type="video/mp4" />
-      </video>
+      {/* Background Anime Image */}
+      <img 
+        src="/dbz_fire.png" 
+        alt="Anime Background" 
+        className="login-bg-image"
+      />
       <div className="video-overlay" />
 
       <div className="glass-card auth-card fade-in" style={{ padding: '2.5rem', position: 'relative', zIndex: 1, backdropFilter: 'blur(20px) saturate(180%)' }}>
@@ -145,17 +141,15 @@ const Login = () => {
       </div>
       <style>{`
         @keyframes spin { to { transform: rotate(360deg); } }
-        .login-bg-video {
+        .login-bg-image {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translate(-50%, -50%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: 0;
             object-fit: cover;
+            filter: brightness(0.6);
         }
         .video-overlay {
             position: absolute;
@@ -163,8 +157,8 @@ const Login = () => {
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, rgba(2,6,23,0.4) 0%, rgba(2,6,23,0.9) 100%);
-            z-index: 0;
+            background: radial-gradient(circle, rgba(10,10,12,0.2) 0%, rgba(10,10,12,0.8) 100%);
+            z-index: 1;
         }
       `}</style>
     </div>

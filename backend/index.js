@@ -11,6 +11,7 @@ const habitRoutes = require('./routes/habits');
 const goalRoutes = require('./routes/goals');
 const analyticsRoutes = require('./routes/analytics');
 const userRoutes = require('./routes/users');
+const taskRoutes = require('./routes/tasks');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
@@ -32,6 +33,7 @@ app.use('/api/habits', habitRoutes);
 app.use('/api/goals', goalRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/tasks', taskRoutes);
 
 
 // Error Handling

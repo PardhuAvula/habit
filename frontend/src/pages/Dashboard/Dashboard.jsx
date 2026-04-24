@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { useAuth } from '../../context/AuthContext';
+import TaskManager from '../../components/TaskManager/TaskManager';
 
 const Dashboard = () => {
     const { user, refreshUser } = useAuth();
@@ -288,7 +289,7 @@ const Dashboard = () => {
                     </div>
                 </motion.div>
 
-                <div className="col-span-full">
+                <div className="col-span-8">
                     <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem' }}>
                         <div>
                              <h2 style={{ fontSize: '2.25rem', fontWeight: 900, marginBottom: '0.4rem', background: 'linear-gradient(to right, #fff, var(--text-muted))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Daily Rituals</h2>
@@ -355,10 +356,11 @@ const Dashboard = () => {
                                                 display: 'flex',
                                                 flexDirection: 'column',
                                                 gap: '1.5rem',
-                                                background: isDone ? 'linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, var(--bg-card) 100%)' : 'var(--bg-glass)',
+                                                background: isDone ? 'linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, var(--bg-card) 100%)' : 'var(--bg-glass)',
                                                 border: isDone ? '2px solid var(--success)' : '1px solid var(--border)',
-                                                boxShadow: isDone ? '0 10px 40px -10px rgba(16, 185, 129, 0.3)' : 'var(--shadow-lg)',
-                                                overflow: 'visible'
+                                                boxShadow: isDone ? '0 0 20px rgba(16, 185, 129, 0.4)' : 'var(--shadow-lg)',
+                                                overflow: 'visible',
+                                                fontFamily: 'var(--font-sans)'
                                             }}
                                         >
                                             {isDone && (
@@ -387,7 +389,7 @@ const Dashboard = () => {
                                             </div>
 
                                             <div>
-                                                <h3 style={{ fontSize: '1.5rem', fontWeight: 900, marginBottom: '0.6rem', color: isDone ? 'var(--text-muted)' : '#fff', textDecoration: isDone ? 'line-through' : 'none', letterSpacing: '-0.02em' }}>{habit.title}</h3>
+                                                <h3 style={{ fontSize: '1.5rem', fontWeight: 900, marginBottom: '0.6rem', color: isDone ? 'var(--text-muted)' : '#fff', textDecoration: isDone ? 'line-through' : 'none', letterSpacing: '1px', fontFamily: 'var(--font-anime)' }}>{habit.title}</h3>
                                                 <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
                                                     <span style={{ fontSize: '0.7rem', fontWeight: 800, padding: '0.2rem 0.6rem', borderRadius: '0.4rem', background: 'rgba(255,255,255,0.05)', color: 'var(--text-secondary)' }}>{habit.category}</span>
                                                     <span style={{ fontSize: '0.7rem', fontWeight: 800, color: 'var(--text-muted)' }}>{habit.frequency.toUpperCase()}</span>
@@ -430,6 +432,10 @@ const Dashboard = () => {
                             </AnimatePresence>
                         </div>
                     )}
+                </div>
+
+                <div className="col-span-4">
+                    <TaskManager />
                 </div>
             </div>
         </motion.div>

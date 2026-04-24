@@ -33,7 +33,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="nav-container">
         <div className="nav-content">
-          <Link to="/" className="nav-logo" onClick={() => setIsMobileMenuOpen(false)}>
+          <Link to="/" className="nav-logo" onClick={() => setIsMobileMenuOpen(false)} style={{ fontFamily: 'var(--font-impact)', fontSize: '2rem' }}>
             <div className="logo-icon"></div>
             <span>TrackNrack</span>
           </Link>

@@ -4,4 +4,4 @@
  */
 const path = require('path');
 process.chdir(path.join(__dirname, 'backend'));
-require('./backend/index.js');
+require('./index.js');

@@ -1,5 +1,5 @@
 const { PrismaClient } = require('@prisma/client');
-const { PrismaLibSql } = require('@prisma/adapter-libsql');
+const { PrismaLibSQL: PrismaLibSql } = require('@prisma/adapter-libsql');
 const { createClient } = require('@libsql/client');
 const path = require('path');
 

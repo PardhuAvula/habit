@@ -7,6 +7,11 @@ const path = require('path');
 let connectionString = process.env.TURSO_DATABASE_URL || process.env.DATABASE_URL || 'file:./dev.db';
 const authToken = process.env.TURSO_AUTH_TOKEN;
 
+// Ensure Prisma doesn't crash on initialization if DATABASE_URL is missing
+if (!process.env.DATABASE_URL) {
+  process.env.DATABASE_URL = 'file:./dev.db';
+}
+
 // Ensure absolute path for Windows compatibility if using local file
 if (connectionString.startsWith('file:') && !connectionString.includes(':') || connectionString.startsWith('file:./')) {
   const relativePath = connectionString.replace('file:', '');

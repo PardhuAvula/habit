@@ -4,12 +4,22 @@ const { createClient } = require('@libsql/client');
 const path = require('path');
 
 // Support Turso for persistent cloud storage
-let connectionString = process.env.TURSO_DATABASE_URL || process.env.DATABASE_URL || 'file:./dev.db';
-const authToken = process.env.TURSO_AUTH_TOKEN;
+let connectionString = process.env.TURSO_DATABASE_URL;
+let authToken = process.env.TURSO_AUTH_TOKEN;
 
-// Ensure Prisma doesn't crash on initialization if DATABASE_URL is missing
+if (!connectionString) {
+  if (process.env.NODE_ENV === 'development') {
+    connectionString = process.env.DATABASE_URL || 'file:./dev.db';
+  } else {
+    // Force Turso cloud database in production if not explicitly provided
+    connectionString = 'libsql://habit-tracker-db-pardhu.aws-ap-south-1.turso.io';
+    authToken = 'eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3NzcwMzQyNDYsImlkIjoiMDE5ZGJmN2QtYjUwMS03NzBjLTkzZGItY2Y2MGYzNzNiZGRlIiwicmlkIjoiZGI3ZDMzMWYtOWY5NC00ZTYzLWE3MmEtOWRjNmJjM2UyMWMzIn0.9nQtgN05DESEQzaOAAtqAfbuPneOuMRcllBi0cS20xaLoWrRSBMM4wz3GtwgojBLEJVlPJFcfqotK1T4iTDLDg';
+  }
+}
+
+// Ensure Prisma doesn't crash on initialization if DATABASE_URL is missing locally
 if (!process.env.DATABASE_URL) {
-  process.env.DATABASE_URL = 'file:./dev.db';
+  process.env.DATABASE_URL = 'file:../dev.db';
 }
 
 if (connectionString.startsWith('file:')) {

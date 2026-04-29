@@ -12,12 +12,17 @@ if (!process.env.DATABASE_URL) {
   process.env.DATABASE_URL = 'file:./dev.db';
 }
 
-// Ensure absolute path for Windows compatibility if using local file
-if (connectionString.startsWith('file:') && !connectionString.includes(':') || connectionString.startsWith('file:./')) {
-  const relativePath = connectionString.replace('file:', '');
-  const absolutePath = path.resolve(__dirname, '..', relativePath);
-  // Forward slashes for URI compatibility
-  const sanitizedPath = absolutePath.split(path.sep).join('/');
+if (connectionString.startsWith('file:')) {
+  // Extract the path after 'file:'
+  let dbPath = connectionString.replace('file:', '');
+  
+  // In Prisma, file paths are relative to the prisma/ directory.
+  // Our prisma directory is backend/prisma/
+  const prismaDir = path.resolve(__dirname, '../prisma');
+  dbPath = path.resolve(prismaDir, dbPath);
+  
+  // Forward slashes for LibSQL URI compatibility
+  const sanitizedPath = dbPath.split(path.sep).join('/');
   connectionString = `file:${sanitizedPath}`;
 }
 

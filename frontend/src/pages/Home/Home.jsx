@@ -10,7 +10,7 @@ const Home = () => {
   usePageMeta({
     title: 'TracknRack | Student Habit Tracker & Productivity App',
     description:
-      'TracknRack is a student habit tracker for daily productivity, fitness tracking, and routine management.',
+      'TracknRack helps students improve productivity, maintain fitness habits, and manage daily routines using an easy online tracking system.',
     path: '/',
   });
 
@@ -25,7 +25,10 @@ const Home = () => {
   return (
     <div className="seo-home">
       <header className="seo-home-header">
-        <Link to="/" className="seo-home-logo">TracknRack</Link>
+        <Link to="/" className="seo-home-logo">
+          <img src="/favicon.svg" alt="TracknRack logo" className="seo-home-logo-icon" />
+          TracknRack
+        </Link>
         <nav className="seo-home-nav" aria-label="Main navigation">
           <Link to="/login" className="btn btn-ghost">Log in</Link>
           <Link to="/register" className="btn btn-primary">
@@ -40,6 +43,9 @@ const Home = () => {
           <p>
             TracknRack helps students track habits, workouts, productivity goals,
             daily routines, and fitness consistency through a simple online dashboard.
+          </p>
+          <p>
+            TracknRack helps students improve productivity, maintain fitness habits, and manage daily routines using an easy online tracking system.
           </p>
           <div className="seo-home-cta">
             <Link to="/register" className="btn btn-primary">Create free account</Link>

@@ -19,6 +19,7 @@ const app = express();
 
 const allowedOrigins = [
   process.env.CLIENT_URL,
+  'https://tracknrack.netlify.app',
   'http://localhost:5173',
   'http://127.0.0.1:5173',
 ].filter(Boolean);
@@ -28,7 +29,12 @@ app.use(helmet({
 }));
 app.use(cors({
   origin(origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (
+      !origin || 
+      allowedOrigins.includes(origin) || 
+      origin.endsWith('.netlify.app') || 
+      origin.startsWith('https://tracknrack.netlify.app')
+    ) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));

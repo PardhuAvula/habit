@@ -1,9 +1,15 @@
 [build]
-  base = "frontend"
+  base = "."
   publish = "frontend/dist"
-  command = "npm install && npm run build"
+  command = "npm run build"
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
+  status = 200
+
+# Redirect API calls to backend (if deploying as serverless functions)
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/backend/:splat"
   status = 200

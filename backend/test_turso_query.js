@@ -1,6 +1,6 @@
 require('dotenv').config();
 const { PrismaClient } = require('@prisma/client');
-const { PrismaLibSql } = require('@prisma/adapter-libsql');
+const { PrismaLibSQL } = require('@prisma/adapter-libsql');
 const { createClient } = require('@libsql/client');
 
 async function test() {
@@ -13,8 +13,8 @@ async function test() {
         authToken: authToken,
     });
 
-    const adapter = new PrismaLibSql(client);
-    const prisma = new PrismaClient({ adapter, url: connectionString });
+    const adapter = new PrismaLibSQL(client);
+    const prisma = new PrismaClient({ adapter });
 
     try {
         console.log("Querying users...");

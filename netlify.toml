@@ -3,13 +3,14 @@
   publish = "frontend/dist"
   command = "npm run build"
 
+# Redirect API calls to backend proxy
+[[redirects]]
+  from = "/api/*"
+  to = "https://habit-1-u116.onrender.com/api/:splat"
+  status = 200
+  force = true
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
-  status = 200
-
-# Redirect API calls to backend (if deploying as serverless functions)
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/backend/:splat"
   status = 200

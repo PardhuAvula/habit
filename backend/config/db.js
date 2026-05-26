@@ -6,6 +6,11 @@ const path = require('path');
 let connectionString = process.env.TURSO_DATABASE_URL;
 let authToken = process.env.TURSO_AUTH_TOKEN;
 
+if (!connectionString && process.env.NODE_ENV === 'production') {
+  connectionString = "libsql://habit-tracker-db-pardhu.aws-ap-south-1.turso.io";
+  authToken = "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3NzcwMzQyNDYsImlkIjoiMDE5ZGJmN2QtYjUwMS03NzBjLTkzZGItY2Y2MGYzNzNiZGRlIiwicmlkIjoiZGI3ZDMzMWYtOWY5NC00ZTYzLWE3MmEtOWRjNmJjM2UyMWMzIn0.9nQtgN05DESEQzaOAAtqAfbuPneOuMRcllBi0cS20xaLoWrRSBMM4wz3GtwgojBLEJVlPJFcfqotK1T4iTDLDg";
+}
+
 if (!connectionString) {
   connectionString = process.env.DATABASE_URL || 'file:./dev.db';
 }

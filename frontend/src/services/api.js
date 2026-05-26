@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+// Empty string = same origin (Vite dev proxy or production single-server deploy)
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 
 
 
@@ -38,6 +39,13 @@ api.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       const refreshToken = localStorage.getItem('refreshToken');
+
+      // If the unauthorized request is only the session check, don't force a redirect.
+      if (originalRequest.url === '/auth/me') {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        return Promise.reject(error);
+      }
       
       if (refreshToken) {
         try {
@@ -49,7 +57,7 @@ api.interceptors.response.use(
           originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
           
           return api(originalRequest);
-        } catch (refreshError) {
+        } catch {
           // If refresh fails, log out
           localStorage.removeItem('accessToken');
           localStorage.removeItem('refreshToken');

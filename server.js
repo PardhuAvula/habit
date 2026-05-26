@@ -1,7 +1,8 @@
 /**
- * Render Bootstrapper
- * This file redirects the execution to the backend/index.js entry point.
+ * Production entry point — boots the Express API (and serves the built SPA in production).
  */
 const path = require('path');
-process.chdir(path.join(__dirname, 'backend'));
-require('./index.js');
+
+const backendDir = path.join(__dirname, 'backend');
+process.chdir(backendDir);
+require(path.join(backendDir, 'index.js'));

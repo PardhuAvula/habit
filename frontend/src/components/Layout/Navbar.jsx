@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/useAuth';
 import { LayoutDashboard, CheckSquare, BarChart2, Target, LogOut, User, Settings, Zap, Award, ChevronDown, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { API_BASE_URL } from '../../services/api';
@@ -19,7 +19,7 @@ const Navbar = () => {
   };
 
   const menuItems = [
-    { to: '/', icon: <LayoutDashboard size={22} />, label: 'Dashboard' },
+    { to: '/dashboard', icon: <LayoutDashboard size={22} />, label: 'Dashboard' },
     { to: '/habits', icon: <CheckSquare size={22} />, label: 'Habits' },
     { to: '/analytics', icon: <BarChart2 size={22} />, label: 'Insights' },
     { to: '/goals', icon: <Target size={22} />, label: 'Objectives' },
@@ -27,13 +27,11 @@ const Navbar = () => {
 
   if (!user) return null;
 
-  const xpProgress = (user.xp / (user.level * 100)) * 100;
-
   return (
     <nav className="navbar">
       <div className="nav-container">
         <div className="nav-content">
-          <Link to="/" className="nav-logo" onClick={() => setIsMobileMenuOpen(false)} style={{ fontFamily: 'var(--font-impact)', fontSize: '2rem' }}>
+          <Link to="/dashboard" className="nav-logo" onClick={() => setIsMobileMenuOpen(false)} style={{ fontFamily: 'var(--font-impact)', fontSize: '2rem' }}>
             <div className="logo-icon"></div>
             <span>TrackNrack</span>
           </Link>

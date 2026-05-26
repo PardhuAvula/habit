@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/useAuth';
 import { Mail, Lock, User, UserPlus, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { usePageMeta } from '../../hooks/usePageMeta';
 
 const Register = () => {
+  usePageMeta({
+    title: 'Sign up | TracknRack Student Habit Tracker',
+    description:
+      'Create a free TracknRack account to build better habits, track fitness, and manage daily routines as a student.',
+    path: '/register',
+  });
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -32,7 +40,7 @@ const Register = () => {
     
     try {
       await register(name, email, password);
-      navigate('/');
+      navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed. Please try again.');
     } finally {
@@ -42,16 +50,7 @@ const Register = () => {
 
   return (
     <div className="auth-page" style={{ position: 'relative', overflow: 'hidden' }}>
-      {/* Background Video */}
-      <video 
-        autoPlay 
-        muted 
-        loop 
-        playsInline 
-        className="login-bg-video"
-      >
-        <source src="/videos/bg-intro.mp4" type="video/mp4" />
-      </video>
+      <div className="login-bg-video" aria-hidden="true" />
       <div className="video-overlay" />
 
       <div className="glass-card auth-card fade-in" style={{ padding: '2.5rem', position: 'relative', zIndex: 1, backdropFilter: 'blur(20px) saturate(180%)' }}>
@@ -169,15 +168,15 @@ const Register = () => {
         @keyframes spin { to { transform: rotate(360deg); } }
         .login-bg-video {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translate(-50%, -50%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: 0;
-            object-fit: cover;
+            background:
+              radial-gradient(ellipse at 70% 30%, rgba(255, 0, 0, 0.25) 0%, transparent 50%),
+              radial-gradient(ellipse at 20% 70%, rgba(255, 140, 0, 0.2) 0%, transparent 45%),
+              linear-gradient(200deg, #020617 0%, #1a0a2e 100%);
         }
         .video-overlay {
             position: absolute;

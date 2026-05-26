@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
-import { Mail, Lock, LogIn, ArrowRight, ShieldCheck } from 'lucide-react';
+import { useAuth } from '../../hooks/useAuth';
+import { Mail, Lock, ArrowRight, ShieldCheck } from 'lucide-react';
+import { usePageMeta } from '../../hooks/usePageMeta';
 
 const Login = () => {
+  usePageMeta({
+    title: 'Log in | TracknRack Student Habit Tracker',
+    description:
+      'Sign in to TracknRack to track habits, fitness routines, and productivity goals on your student dashboard.',
+    path: '/login',
+  });
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -24,7 +32,7 @@ const Login = () => {
       await login(email, password);
       setPlayIntro(true); // Trigger the intro video
       setTimeout(() => {
-        navigate('/');
+        navigate('/dashboard');
       }, 3500); // 3.5 seconds of intro
     } catch (err) {
       setError(err.response?.data?.message || 'Invalid email or password. Please try again.');
@@ -56,12 +64,7 @@ const Login = () => {
 
   return (
     <div className="auth-page" style={{ position: 'relative', overflow: 'hidden' }}>
-      {/* Background Anime Image */}
-      <img 
-        src="/dbz_fire.png" 
-        alt="Anime Background" 
-        className="login-bg-image"
-      />
+      <div className="login-bg-image" aria-hidden="true" />
       <div className="video-overlay" />
 
       <div className="glass-card auth-card fade-in" style={{ padding: '2.5rem', position: 'relative', zIndex: 1, backdropFilter: 'blur(20px) saturate(180%)' }}>
@@ -102,7 +105,7 @@ const Login = () => {
           <div className="input-group">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <label className="input-label" htmlFor="password" style={{ color: 'var(--text-main)', opacity: 0.8 }}>Password</label>
-              <Link to="/forgot-password" style={{ fontSize: '0.75rem', color: 'var(--primary-light)', textDecoration: 'none', fontWeight: 700 }}>Recovery Key?</Link>
+              <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 700 }}>Min. 6 characters</span>
             </div>
             <div style={{ position: 'relative' }}>
               <Lock size={18} style={{ position: 'absolute', left: '1.125rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--primary-light)', pointerEvents: 'none', opacity: 0.6 }} />
@@ -148,8 +151,10 @@ const Login = () => {
             width: 100%;
             height: 100%;
             z-index: 0;
-            object-fit: cover;
-            filter: brightness(0.6);
+            background:
+              radial-gradient(ellipse at 30% 20%, rgba(255, 140, 0, 0.35) 0%, transparent 55%),
+              radial-gradient(ellipse at 70% 80%, rgba(255, 0, 0, 0.2) 0%, transparent 50%),
+              linear-gradient(160deg, #020617 0%, #1a1035 50%, #020617 100%);
         }
         .video-overlay {
             position: absolute;

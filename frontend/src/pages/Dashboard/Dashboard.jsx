@@ -6,11 +6,11 @@ import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/useAuth';
 import TaskManager from '../../components/TaskManager/TaskManager';
 
 const Dashboard = () => {
-    const { user, refreshUser } = useAuth();
+    const { refreshUser } = useAuth();
     const [habits, setHabits] = useState([]);
     const [loading, setLoading] = useState(true);
     const [stats, setStats] = useState({ total: 0, completed: 0, percentage: 0 });
@@ -183,8 +183,6 @@ const Dashboard = () => {
             </div>
         );
     }
-
-    const xpProgress = user ? (user.xp / (user.level * 100)) * 100 : 0;
 
     return (
         <motion.div 

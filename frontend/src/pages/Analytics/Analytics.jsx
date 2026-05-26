@@ -4,7 +4,7 @@ import CalendarHeatmap from 'react-calendar-heatmap';
 import 'react-calendar-heatmap/dist/styles.css';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Cell } from 'recharts';
 import { BarChart as BarIcon, Calendar, TrendingUp, Info, Activity } from 'lucide-react';
-import { subDays, format } from 'date-fns';
+import { subDays } from 'date-fns';
 
 const Analytics = () => {
     const [heatmapData, setHeatmapData] = useState([]);

@@ -203,6 +203,7 @@ exports.logHabit = asyncHandler(async (req, res) => {
   });
 
   if (!habit || habit.userId !== req.user.id) {
+    res.status(404);
     throw new Error('Habit not found');
   }
 

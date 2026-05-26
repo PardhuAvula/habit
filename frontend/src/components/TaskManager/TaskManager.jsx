@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import api from '../../services/api';
 import { CheckSquare, Square, Plus, Trash2, Calendar, Clock, Sword } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -10,11 +10,7 @@ const TaskManager = () => {
     const [selectedDate, setSelectedDate] = useState(format(new Date(), 'yyyy-MM-dd'));
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        fetchTasks();
-    }, [selectedDate]);
-
-    const fetchTasks = async () => {
+    const fetchTasks = useCallback(async () => {
         setLoading(true);
         try {
             const res = await api.get(`/tasks?date=${selectedDate}`);
@@ -24,7 +20,11 @@ const TaskManager = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [selectedDate]);
+
+    useEffect(() => {
+        fetchTasks();
+    }, [fetchTasks]);
 
     const addTask = async (e) => {
         e.preventDefault();

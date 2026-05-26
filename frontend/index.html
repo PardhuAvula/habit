@@ -2,15 +2,69 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TrackNrack | Minimal Habit Tracking</title>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <title>TracknRack | Student Habit Tracker &amp; Productivity App</title>
+    <meta name="description" content="TracknRack is a student habit tracker for daily productivity, fitness tracking, and routine management." />
+    <meta name="keywords" content="habit tracker, student productivity, fitness tracking, daily routine, college habits, workout tracker" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="TracknRack" />
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="TracknRack | Student Habit Tracker &amp; Productivity App" />
+    <meta property="og:description" content="TracknRack is a student habit tracker for daily productivity, fitness tracking, and routine management." />
+    <meta property="og:site_name" content="TracknRack" />
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="TracknRack | Student Habit Tracker" />
+    <meta name="twitter:description" content="Track habits, fitness, and daily routines with a free student productivity dashboard." />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "TracknRack",
+      "applicationCategory": "LifestyleApplication",
+      "operatingSystem": "Web",
+      "description": "Student habit tracker for daily productivity, fitness tracking, and routine management.",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      .static-seo-fallback {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem 3rem;
+        font-family: system-ui, sans-serif;
+        color: #e2e8f0;
+        background: #020617;
+        line-height: 1.6;
+      }
+      .static-seo-fallback h1 { font-size: 2rem; color: #fff; margin-bottom: 1rem; }
+      .static-seo-fallback h2 { font-size: 1.35rem; color: #ffb84d; margin: 2rem 0 0.75rem; }
+      .static-seo-fallback p { margin-bottom: 1rem; color: #94a3b8; }
+      .static-seo-fallback a { color: #ff8c00; }
+    </style>
   </head>
   <body>
+    <!-- Crawlable SEO content (visible before React loads; removed after app mounts) -->
+    <main id="static-seo-fallback" class="static-seo-fallback">
+      <h1>TracknRack - Best Habit Tracker for Students</h1>
+      <p>
+        TracknRack helps students track habits, workouts, productivity goals,
+        daily routines, and fitness consistency through a simple online dashboard.
+      </p>
+      <h2>Daily Routine and Fitness Tracking</h2>
+      <p>
+        This habit tracking web application is designed for college students
+        who want to improve productivity, fitness, and consistency.
+      </p>
+      <p>
+        <a href="/register">Create a free account</a> or <a href="/login">sign in</a> to start tracking today.
+      </p>
+    </main>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

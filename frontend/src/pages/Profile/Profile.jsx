@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/useAuth';
 import { API_BASE_URL } from '../../services/api';
 import api from '../../services/api';
 import { User, Shield, Mail, Calendar, Settings, ChevronRight, Award, Zap, Camera, X, Save, Lock } from 'lucide-react';

@@ -1,10 +1,12 @@
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './context/AuthContext';
+import { AuthProvider } from './context/AuthProvider';
+import { useAuth } from './hooks/useAuth';
 import Navbar from './components/Layout/Navbar';
 import './index.css';
 
 // Lazy load pages for better performance
+import Home from './pages/Home/Home';
 const Dashboard = lazy(() => import('./pages/Dashboard/Dashboard'));
 const HabitList = lazy(() => import('./pages/Habits/HabitList'));
 const Analytics = lazy(() => import('./pages/Analytics/Analytics'));
@@ -63,11 +65,12 @@ const AppContent = () => {
             <Suspense fallback={<PageLoading />}>
               <Routes>
                 {/* Public Routes */}
-                <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
-                <Route path="/register" element={!user ? <Register /> : <Navigate to="/" />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={!user ? <Login /> : <Navigate to="/dashboard" />} />
+                <Route path="/register" element={!user ? <Register /> : <Navigate to="/dashboard" />} />
 
                 {/* Protected Routes */}
-                <Route path="/" element={
+                <Route path="/dashboard" element={
                   <ProtectedRoute>
                     <Dashboard />
                   </ProtectedRoute>

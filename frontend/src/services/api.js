@@ -41,7 +41,8 @@ api.interceptors.response.use(
       const refreshToken = localStorage.getItem('refreshToken');
 
       // If the unauthorized request is only the session check, don't force a redirect.
-      if (originalRequest.url === '/auth/me') {
+      const requestUrl = originalRequest.url || originalRequest?.baseURL || '';
+      if (requestUrl.endsWith('/auth/me') || requestUrl.endsWith('/api/auth/me')) {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
         return Promise.reject(error);
